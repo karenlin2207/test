@@ -59,7 +59,7 @@ Template.dashboardOrdersList.helpers({
         TotalAmount: parseInt(order.billing[0].paymentMethod.amount),
         TradeDesc: "test",
         Items:  Items,
-        ReturnURL: "http://192.168.1.15:3000/receive",
+        ReturnURL: "http://52.37.27.85:3000/receive",
         ChoosePayment: "ALL"
       };
       var data = Packages.findOne({ 
