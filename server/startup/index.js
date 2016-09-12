@@ -5,6 +5,7 @@ import Packages from "./packages";
 import Plugins from "./plugins";
 import Registry from "./registry";
 import Init from "./init";
+import Receive from "./receive";
 
 export default function () {
   Accounts();
@@ -13,5 +14,6 @@ export default function () {
   Packages();
   Plugins();
   Registry();
+  Receive();
   Init();
 }
