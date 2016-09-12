@@ -1,0 +1,43 @@
+
+<template name="rolesDashboardControls">
+  <button type="button" class="btn btn-default" data-event-action="addRoles">
+    <i class="fa fa-plus fa-lg" title="{{i18n 'roles.addRoles' 'Add roles'}}"></i> Add Roles
+  </button>
+</template>
+
+<template name="roles">
+  <div class="container-fluid-sm">
+    <div class="roles-rate-tables">
+      {{> rolesTable}}
+    </div>
+  </div>
+</template>
+
+<template name="rolesTable">
+  {{#each roles}}
+  {{/each}}
+    <div class="alert alert-info" data-i18n="roles.noRoles">No Roles are configured.</div>
+    {{>addRoles}}
+</template>
+
+<template name="addRoles">
+  <div class="panel">
+    <div class="panel-body">
+      {{#autoForm
+        collection=Collections.Roles
+        id="roles-add-form"
+        template="bootstrap3-inline"
+        type="method"
+        meteormethod="addRoles"
+        }}
+        <fieldset>
+          <!-- <legend>Add Roles</legend> -->
+          <div class="col-md-12">
+            {{>afQuickField name='rolesName' placeholder="Roles Name"}}
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </fieldset>
+      {{/autoForm}}
+    </div>
+  </div>
+</template>

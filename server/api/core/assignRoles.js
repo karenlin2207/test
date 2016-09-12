@@ -86,7 +86,6 @@ export function assignOwnerRoles(shopId, pkgName, registry) {
   }
   // we don't use accounts/addUserPermissions here because we may not yet have permissions
   Roles.addUsersToRoles(owners, defaultOwnerRoles, shopId);
-
   // the reaction owner has permissions to all sites by default
   Roles.addUsersToRoles(owners, globalRoles, Roles.GLOBAL_GROUP);
 

@@ -1,7 +1,6 @@
 import { Meteor } from "meteor/meteor";
 import * as Collections from "/lib/collections";
 import { Hooks, Logger, Reaction } from "/server/api";
-
 export default function () {
   /**
    * Make sure initial admin user has verified their
@@ -120,10 +119,12 @@ export default function () {
         }
       }
       // clone before adding roles
-      let account = Object.assign({}, user, additionals);
+
+     let account = Object.assign({}, user, additionals);
       account.userId = user._id;
       Collections.Accounts.insert(account);
-
+      
+      
       // send a welcome email to new users,
       // but skip the first default admin user
       // (default admins already get a verification email)

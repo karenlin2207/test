@@ -295,7 +295,11 @@ Template.orderStatusDetail.helpers({
   orderAge: function () {
     return moment(this.createdAt).fromNow();
   },
-
+  paymentStatus(){
+    if(this.billing[0].paymentMethod.paymentstatus){
+      return this.billing[0].paymentMethod.paymentstatus;
+    }
+  },
   shipmentTracking: function () {
     if (this.shipping[0].tracking) {
       return this.shipping[0].tracking;

@@ -1,8 +1,11 @@
 import * as Collections from "/lib/collections";
 import * as Schemas from "/lib/collections/schemas";
-import { Logger, Reaction } from "/server/api";
-
-
+import { Hooks, Logger, Reaction } from "/server/api";
+import { Jobs, Packages, Shops } from "/lib/collections";
+import { Meteor } from "meteor/meteor";
+import { assignOwnerRoles } from "/server/api/core/assignRoles";
+import { getRegistryDomain } from "/server/api/core/setDomain";
+import { loadPackages } from "/server/api/core/core";
 /**
  * Reaction Account Methods
  */
@@ -11,7 +14,8 @@ Meteor.methods({
    * check if current user has password
    */
   "accounts/currentUserHasPassword": function () {
-    const user = Meteor.users.findOne(Meteor.userId());
+    let user;
+    user = Meteor.users.findOne(Meteor.userId());
     if (user.services.password) {
       return true;
     }
@@ -236,94 +240,85 @@ Meteor.methods({
    * @param {String} name - name to address email
    * @returns {Boolean} returns true
    */
-  "accounts/inviteShopMember": function (shopId, email, name) {
+  "accounts/inviteShopMember": function (shopId, ParentsUserId,email, password, thisRoles) {
+    let currentUserName;
+    let shop;
+    let token;
+    let user;
+    let userId;
+    let options = {};
     check(shopId, String);
     check(email, String);
-    check(name, String);
+    check(password, String);
+    check(ParentsUserId, Object);
+    check(thisRoles, String);
+    const domain = getRegistryDomain();
+    const defaultAdminRoles = ["owner", "admin", "guest", "account/profile"];
+    var defaultSupervisorRoles = [ "account/profile", "guest", "product", "tag", "index", "cart/checkout", "cart/completed", "reaction-checkout", "reaction-accounts", "accounts", "reaction-accounts/accountsSettings", "dashboard/accounts", "reaction-orders", "orders", "dashboard/orders", "dashboard/pdf/orders", "reaction-dashboard", "dashboard", "shopSettings" ] ;
 
     this.unblock();
-
-    const shop = Collections.Shops.findOne(shopId);
-
-    if (!shop) {
-      const msg = `accounts/inviteShopMember - Shop ${shopId} not found`;
-      Logger.error(msg);
-      throw new Meteor.Error("shop-not-found", msg);
+    shop = Collections.Shops.findOne(shopId);
+    options = Hooks.Events.run("beforeCreateDefaultAdminUser", options);
+    if (!Reaction.hasPermission("reaction-accounts", Meteor.userId(), shopId)) {
+      throw new Meteor.Error(403, "Access denied");
     }
-
-    if (!Reaction.hasPermission("reaction-accounts", this.userId, shopId)) {
-      Logger.error(`User ${this.userId} does not have reaction-accounts permissions`);
-      throw new Meteor.Error("access-denied", "Access denied");
+    if (!Reaction.hasPermission("owner",Meteor.userId(), shopId) && thisRoles === "0"){
+      throw new Meteor.Error(403, "You can't add Adminstrator!");
     }
-
-    const currentUser = Meteor.users.findOne(this.userId);
-
-    let currentUserName;
-
-    if (currentUser) {
-      if (currentUser.profile) {
-        currentUserName = currentUser.profile.name || currentUser.username;
-      } else {
-        currentUserName = currentUser.username;
-      }
-    } else {
-      currentUserName = "Admin";
-    }
-
-    const user = Meteor.users.findOne({
-      "emails.address": email
-    });
-
-    const tmpl = "accounts/inviteShopMember";
-    SSR.compileTemplate("accounts/inviteShopMember", Reaction.Email.getTemplate(tmpl));
-
-    if (!user) {
-      const userId = Accounts.createUser({
-        email: email,
-        username: name
+  
+    // everything cool? invite user
+    if (shop && email && password) {
+      user = Meteor.users.findOne({
+        "emails.address": email
       });
-
-      const newUser = Meteor.users.findOne(userId);
-
-      if (!newUser) {
-        throw new Error("Can't find user");
-      }
-
-      const token = Random.id();
-
-      Meteor.users.update(userId, {
-        $set: {
-          "services.password.reset": { token, email, when: new Date() }
+      if (!user) {
+        Logger.info(thisRoles);
+        if (thisRoles === "0"){
+          options.username = "Admin - " + email;
+        }else if (thisRoles === "1"){
+          options.username = "Supervisor - " + email;
+        }        
+        options.email = email;
+        options.password = password;
+        options.ParentsUserId = ParentsUserId;
+        userId = Accounts.createUser(options);
+        user = Meteor.users.findOne(userId);
+        if (!user) {
+          throw new Error("Can't find user");
         }
-      });
 
-      Reaction.Email.send({
-        to: email,
-        from: `${shop.name} <${shop.emails[0].address}>`,
-        subject: `You have been invited to join ${shop.name}`,
-        html: SSR.render("accounts/inviteShopMember", {
-          homepage: Meteor.absoluteUrl(),
-          shop,
-          currentUserName,
-          invitedUserName: name,
-          url: Accounts.urls.enrollAccount(token)
-        })
-      });
-    } else {
-      Reaction.Email.send({
-        to: email,
-        from: `${shop.name} <${shop.emails[0].address}>`,
-        subject: `You have been invited to join ${shop.name}`,
-        html: SSR.render("accounts/inviteShopMember", {
-          homepage: Meteor.absoluteUrl(),
-          shop,
-          currentUserName,
-          invitedUserName: name,
-          url: Meteor.absoluteUrl()
-        })
-      });
+      }
+      else{
+        throw new Meteor.Error(403, "This email is already created!");
+      } 
     }
-    return true;
+    if (thisRoles === "0"){
+        //
+        // Set Admin Roles
+        //
+        const packages = Packages.find().fetch();
+        for (let pkg of packages) {
+          Reaction.assignOwnerRoles(shopId, pkg.name, pkg.registry); 
+        }
+        // we don't use accounts/addUserPermissions here because we may not yet have permissions
+        Roles.setUserRoles(userId, defaultAdminRoles, shopId);
+        // the reaction owner has permissions to all sites by default
+        Roles.setUserRoles(userId, defaultAdminRoles, Roles.GLOBAL_GROUP);
+        // initialize package permissions
+        // we don't need to do any further permission configuration
+        Hooks.Events.run("afterCreateDefaultAdminUser", user);
+      }else if(thisRoles === "1"){
+        //
+        // Set Supervisor Roles
+        //
+        if (!Reaction.hasPermission("owner",Meteor.userId(), shopId)){
+          defaultSupervisorRoles = Roles.getRolesForUser(Meteor.userId(),shopId);
+        }
+        Roles.setUserRoles(userId, defaultSupervisorRoles, shopId);
+        Hooks.Events.run("afterCreateDefaultAdminUser", user);
+      }
+      Reaction.loadPackages();
+      return true;
   },
 
   /**
@@ -336,20 +331,18 @@ Meteor.methods({
   "accounts/sendWelcomeEmail": function (shopId, userId) {
     check(shopId, String);
     check(userId, String);
-
     this.unblock();
-
     const user = Collections.Accounts.findOne(userId);
     const shop = Collections.Shops.findOne(shopId);
+    let shopEmail;
 
     // anonymous users arent welcome here
     if (!user.emails || !user.emails.length > 0) {
       return true;
     }
 
-    const userEmail = user.emails[0].address;
+    let userEmail = user.emails[0].address;
 
-    let shopEmail;
     // provide some defaults for missing shop email.
     if (!shop.emails) {
       shopEmail = `${shop.name}@localhost`;
@@ -358,23 +351,30 @@ Meteor.methods({
       shopEmail = shop.emails[0].address;
     }
 
-    const tmpl = "accounts/sendWelcomeEmail";
-    SSR.compileTemplate("accounts/sendWelcomeEmail", Reaction.Email.getTemplate(tmpl));
-
-    Reaction.Email.send({
-      to: userEmail,
-      from: `${shop.name} <${shopEmail}>`,
-      subject: `Welcome to ${shop.name}!`,
-      html: SSR.render("accounts/sendWelcomeEmail", {
-        homepage: Meteor.absoluteUrl(),
-        shop: shop,
-        user: Meteor.user()
-      })
-    });
-
-    return true;
+    // configure email
+    Reaction.configureMailUrl();
+    // don't send account emails unless email server configured
+    if (!process.env.MAIL_URL) {
+      Logger.info("Mail not configured: suppressing welcome email output");
+      return true;
+    }
+    // fetch and send templates
+    SSR.compileTemplate("accounts/sendWelcomeEmail", ReactionEmailTemplate("accounts/sendWelcomeEmail"));
+    try {
+      return Email.send({
+        to: userEmail,
+        from: `${shop.name} <${shopEmail}>`,
+        subject: `Welcome to ${shop.name}!`,
+        html: SSR.render("accounts/sendWelcomeEmail", {
+          homepage: Meteor.absoluteUrl(),
+          shop: shop,
+          user: Meteor.user()
+        })
+      });
+    } catch (e) {
+      Logger.warn("Unable to send email, check configuration and port.", e);
+    }
   },
-
   /**
    * accounts/addUserPermissions
    * @param {String} userId - userId
@@ -397,7 +397,7 @@ Meteor.methods({
     try {
       return Roles.addUsersToRoles(userId, permissions, group);
     } catch (error) {
-      return Logger.error(error);
+      return Logger.info(error);
     }
   },
 
@@ -416,7 +416,7 @@ Meteor.methods({
     try {
       return Roles.removeUsersFromRoles(userId, permissions, group);
     } catch (error) {
-      Logger.error(error);
+      Logger.info(error);
       throw new Meteor.Error(403, "Access Denied");
     }
   },
@@ -439,7 +439,7 @@ Meteor.methods({
     try {
       return Roles.setUserRoles(userId, permissions, group);
     } catch (error) {
-      Logger.error(error);
+      Logger.info(error);
       return error;
     }
   }

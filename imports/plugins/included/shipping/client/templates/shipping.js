@@ -117,7 +117,7 @@ Template.afFormGroup_validRanges.helpers({
 });
 
 /*
- * template addShippingProvider events
+ * template editShippingProvider events
  */
 Template.editShippingProvider.events({
   "click [data-event-action=cancelUpdateShippingProvider]"(event) {

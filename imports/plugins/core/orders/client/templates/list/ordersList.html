@@ -74,6 +74,13 @@
           <span data-id="order.reference">Ref:</span>
           <span id="order-payment-transaction">{{paymentMethod.transactionId}}</span>
           &nbsp;
+          {{#if allpaycheckout paymentMethod.storedCard}}
+            <button id="allpaybutton" class="btn btn-lg btn-success btn-block btn-complete-order" style="width:initial;">
+            <span id="btn-complete-order" data-i18n="checkoutPayment.PayYourOrder">Pay your order</span>
+            <i class="fa fa-spinner fa-spin hidden" id="btn-processing"></i>
+            </button>
+            {{{allpaycheckoutform}}}
+          {{/if}}
           {{/each}}
         </div>
       </div>
@@ -100,7 +107,6 @@
       {{> ordersListSummary}}
     </div>
   </div>
-
 {{else}}
   <div class="alert alert-info">
     <span data-i18n="cartCompleted.noOrdersFound">No orders found.</span>

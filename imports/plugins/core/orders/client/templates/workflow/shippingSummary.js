@@ -59,7 +59,11 @@ Template.coreOrderShippingSummary.helpers({
   shipment() {
     return Template.instance().order.shipping[0];
   },
-
+ paymentStatus(){
+    if(Template.instance().order.billing[0].paymentMethod.paymentstatus){
+      return Template.instance().order.billing[0].paymentMethod.paymentstatus;
+    }
+  },
   paymentProcessor() {
     const processor = Template.instance().order.billing[0].paymentMethod.processor;
     return {

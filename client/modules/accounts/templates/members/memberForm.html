@@ -3,12 +3,18 @@
     <div class="panel-body">
       <form class="">
         <div class="form-group">
-          <label for="member-form-name"><span data-i18n="accountsUI.name">Name</span></label>
-          <input type="text" class="form-control" id="member-form-name" name="name" placeholder="Bob Jane">
-        </div>
-        <div class="form-group">
           <label for="member-form-email"><span data-i18n="accountsUI.email">Email</span></label>
           <input type="email" class="form-control" id="member-form-email" name="email" placeholder="bob.jane@example.com">
+        </div>
+        <div class="form-group">
+          <label for="member-form-password"><span data-i18n="accountsUI.password">Password</span></label>
+          <input type="password" class="form-control" id="member-form-name" name="password" placeholder="Bob Jane">
+        </div>
+        <div class="form-group">
+          <label for="member-form-checkedRoles"><span data-i18n="accountsUI.checkedRoles">Accounts Permissions</span></label>
+          <input type="radio" data-i18n="accountsUI.AdminRoles" name="Roles" value="0" >Adminstrate
+          <input type="radio" data-i18n="accountsUI.SupervisorRoles" name="Roles" value="1" >Supervisor
+          <input type="radio" data-i18n="accountsUI.GuestRoles" name="Roles" value="2" >Guest
         </div>
         <button type="submit" class="btn btn-primary">
           <span data-i18n="accountsUI.info.sendInvitation">Send invitation</span>
