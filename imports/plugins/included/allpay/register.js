@@ -34,6 +34,10 @@ Reaction.registerPackage({
     {
       template: "allpayPaymentForm",
       provides: "paymentMethod"
+    },
+    {
+      label: "allpay receive",
+      route: "receive"
     }
   ]
 });
