@@ -59,7 +59,7 @@ Template.dashboardOrdersList.helpers({
         TotalAmount: parseInt(order.billing[0].paymentMethod.amount),
         TradeDesc: "test",
         Items:  Items,
-        ReturnURL: "http://54.68.144.14:3000/receive",
+        ReturnURL: "http://54.68.144.14:3000/message",
         ChoosePayment: "ALL"
       };
       var data = Packages.findOne({ 
@@ -103,5 +103,16 @@ Template.dashboardOrdersList.events({
   'click #allpaybutton': function(event){
     var form = document.getElementById("_allpayForm");
     form.submit();
+  },
+  'click #ad': function(event){
+   var familys = {'name' : 'Bruce',
+   'age' : 18,
+   'sex' : 'male'};
+
+var jsonData = JSON.stringify(familys);
+    var xhr = new XMLHttpRequest();  // 建立XHR物件
+    xhr.open('POST','/receive');
+    xhr.setRequestHeader('Content-Type', 'application/json');  // 這裡是重點
+    xhr.send(jsonData);
   }
 });

@@ -1,15 +1,15 @@
 export default function () {
 WebApp.connectHandlers.use("/receive", function(req, res, next) {
-  var body = [];
   var MerchantID = res.body;
+  var body;
   req.on('data', Meteor.bindEnvironment(function (data) {
-    body.push(data.toString());
+    body = data.toString();
   }));
 
   req.on('end', Meteor.bindEnvironment(function () {
-    console.log(req.method);
+    console.log(body);
+    res.writeHead(200, {'Content-Type': 'application/json'});
     if (MerchantID) console.log(MerchantID);
-    res.writeHead(200);
     res.end("Hello world from: " + body + '\n');
   }));
 });
