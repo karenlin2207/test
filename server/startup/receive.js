@@ -1,3 +1,4 @@
+export default function () {
 WebApp.connectHandlers.use("/receive", function(req, res, next) {
   var body = [];
   var MerchantID = res.body;
@@ -12,3 +13,4 @@ WebApp.connectHandlers.use("/receive", function(req, res, next) {
     res.end("Hello world from: " + body + '\n');
   }));
 });
+}
