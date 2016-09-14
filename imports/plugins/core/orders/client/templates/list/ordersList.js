@@ -110,9 +110,9 @@ Template.dashboardOrdersList.events({
    'sex' : 'male'};
 
 var jsonData = JSON.stringify(familys);
-    var xhr = new XMLHttpRequest();  // 建立XHR物件
+    var xhr = new XMLHttpRequest();
     xhr.open('POST','http://54.68.144.14:3000/receive');
-    xhr.setRequestHeader('Content-Type', 'application/json');  // 這裡是重點
+    xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.send(jsonData);
   }
 });
