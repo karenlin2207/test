@@ -11,7 +11,7 @@ WebApp.connectHandlers.use("/receive", function(req, res, next) {
   }));
 
   req.on('end', Meteor.bindEnvironment(function () {
-    console.log(body);
+    console.log('body ' +body);
     res.writeHead(200, {'Content-Type': 'application/json'});
     res.end("Hello world from: " + body + '\n');
   }));
