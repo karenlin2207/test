@@ -51,7 +51,7 @@ Template.allpayPaymentForm.helpers({
       TotalAmount: parseInt(Cart.findOne().cartTotal()),
       TradeDesc: "test",
       Items:  Items,
-      ReturnURL: "http://54.68.144.14:3000/message",
+      ReturnURL: "http://54.68.144.14:3000/receive",
       ChoosePayment: "ALL"
     };
 
