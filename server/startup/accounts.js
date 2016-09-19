@@ -122,22 +122,7 @@ export default function () {
 
      let account = Object.assign({}, user, additionals);
       account.userId = user._id;
-     if (Meteor.user()) {
-        let parentsId = Meteor.user()._id;
-         if (parentsId){
-        account.parentsId = parentsId;
-        }
-        if (parentsId){
-        const parents = Collections.Accounts.findOne({_id : parentsId});
-        if (parents.childrensId) {
-         parents.childrensId[parents.childrensId.length] = user._id;
-         }else{
-           let childId = user._id;
-           parents.childrensId= [childId];
-         }
-        Collections.Accounts.update({_id :parentsId}, {$set : {"childrensId":parents.childrensId}});
-        }
-      }
+     
       Collections.Accounts.insert(account);
       
       
