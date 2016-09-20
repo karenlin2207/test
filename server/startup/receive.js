@@ -31,7 +31,8 @@ WebApp.connectHandlers.use("/receive", function(req, res, next) {
 
   req.on('end', Meteor.bindEnvironment(function () {
     for(var i = 0; i<body.length;i++) {
-      console.log(body[i]);
+      console.log(body[i].split("="));
+      body[i]=body[i].split("=");
     }
     res.writeHead(200, {'Content-Type': 'application/json'});
     res.end("Hello world from: " + body + '\n');
