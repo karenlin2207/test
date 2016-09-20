@@ -19,7 +19,7 @@ Router.map(function () {
 WebApp.connectHandlers.use("/receive", function(req, res, next) {
   var MerchantID = res.body;
   var body = new Array();
-  var temparray = {};
+  var temparray = new Array();
   var obj={};
   console.log('[connectHandlers][receive]');
   
