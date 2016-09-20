@@ -59,7 +59,7 @@ Template.dashboardOrdersList.helpers({
         TotalAmount: parseInt(order.billing[0].paymentMethod.amount),
         TradeDesc: "test",
         Items:  Items,
-        ReturnURL: "https://ec2-52-43-22-203.us-west-2.compute.amazonaws.com/",
+        ReturnURL: "https://ec2-52-43-22-203.us-west-2.compute.amazonaws.com/receive",
         ChoosePayment: "ALL"
       };
       var data = Packages.findOne({ 
