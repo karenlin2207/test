@@ -26,7 +26,7 @@ WebApp.connectHandlers.use("/receive", function(req, res, next) {
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, PUT, DELETE, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Origin, Content-Type, X-Auth-Token');
   req.on('data', Meteor.bindEnvironment(function (data) {
-    body.push(data.toString());
+    body = data.toString().split("&");
   }));
 
   req.on('end', Meteor.bindEnvironment(function () {
