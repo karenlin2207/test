@@ -32,12 +32,11 @@ WebApp.connectHandlers.use("/receive", function(req, res, next) {
 
   req.on('end', Meteor.bindEnvironment(function () {
     for(var i = 0; i<body.length;i++) {
-      obj={};
       body[i]=body[i].split("=");
       obj[body[i][0]]=body[i][1];
       temparray.push(obj);
     }
-    console.log(temparray);
+    console.log(obj);
     console.log(temparray.RtnCode);
     res.writeHead(200, {'Content-Type': 'application/json'});
     res.end("Hello world from: " + body + '\n');
