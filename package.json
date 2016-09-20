@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "accounting-js": "^1.1.1",
+    "allpay": "^1.1.0",
     "authorize-net": "github:ongoworks/node-authorize-net",
     "autonumeric": "^1.9.45",
     "autoprefixer": "^6.3.7",

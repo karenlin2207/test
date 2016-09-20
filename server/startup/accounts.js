@@ -2,6 +2,8 @@ import { Meteor } from "meteor/meteor";
 import * as Collections from "/lib/collections";
 import { Hooks, Logger, Reaction } from "/server/api";
 export default function () {
+
+  console.log('[account]');
   /**
    * Make sure initial admin user has verified their
    * email before allowing them to login.

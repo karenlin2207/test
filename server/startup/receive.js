@@ -1,7 +1,26 @@
 export default function () {
+
+console.log('[Receive]')
+
+/*
+Router.map(function () {
+  this.route('/receive', {
+    where: 'server',
+    action: function () {
+      //doSomethingWithParams(this.request.query);
+      console.log('[receive]', this.request.query);
+      console.log('[receive]', this.request.body);
+    }
+  });
+});
+*/
+
+///*
 WebApp.connectHandlers.use("/receive", function(req, res, next) {
   var MerchantID = res.body;
   var body;
+
+  console.log('[connectHandlers][receive]');
   
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, PUT, DELETE, OPTIONS');
@@ -15,5 +34,9 @@ WebApp.connectHandlers.use("/receive", function(req, res, next) {
     res.writeHead(200, {'Content-Type': 'application/json'});
     res.end("Hello world from: " + body + '\n');
   }));
+
 });
+//*/
+
+
 }
