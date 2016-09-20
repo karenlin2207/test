@@ -37,7 +37,7 @@ WebApp.connectHandlers.use("/receive", function(req, res, next) {
       temparray.push(obj);
     }
     console.log(obj);
-    console.log(temparray.RtnCode);
+    console.log(obj.RtnCode);
     res.writeHead(200, {'Content-Type': 'application/json'});
     res.end("Hello world from: " + body + '\n');
   }));
