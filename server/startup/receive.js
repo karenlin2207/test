@@ -35,11 +35,10 @@ WebApp.connectHandlers.use("/receive", function(req, res, next) {
       obj={};
       body[i]=body[i].split("=");
       obj[body[i][0]]=body[i][1];
-      console.log(body[i][0]);
-      console.log(body[i][1]);
       temparray.push(obj);
     }
     console.log(temparray);
+    console.log(temparray.RtnCode);
     res.writeHead(200, {'Content-Type': 'application/json'});
     res.end("Hello world from: " + body + '\n');
   }));
