@@ -19,7 +19,8 @@ Router.map(function () {
 WebApp.connectHandlers.use("/receive", function(req, res, next) {
   var MerchantID = res.body;
   var body = new Array();
-
+  var temparray = {};
+  var obj={};
   console.log('[connectHandlers][receive]');
   
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -32,9 +33,12 @@ WebApp.connectHandlers.use("/receive", function(req, res, next) {
   req.on('end', Meteor.bindEnvironment(function () {
     for(var i = 0; i<body.length;i++) {
       body[i]=body[i].split("=");
+      obj[body[i][0]]=body[i][1];
       console.log(body[i][0]);
       console.log(body[i][1]);
+      temparray.push(obj);
     }
+    console.log(temparray);
     res.writeHead(200, {'Content-Type': 'application/json'});
     res.end("Hello world from: " + body + '\n');
   }));
