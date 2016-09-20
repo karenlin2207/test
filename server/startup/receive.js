@@ -32,6 +32,7 @@ WebApp.connectHandlers.use("/receive", function(req, res, next) {
 
   req.on('end', Meteor.bindEnvironment(function () {
     for(var i = 0; i<body.length;i++) {
+      obj={};
       body[i]=body[i].split("=");
       obj[body[i][0]]=body[i][1];
       console.log(body[i][0]);
