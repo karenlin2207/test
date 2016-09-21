@@ -44,6 +44,7 @@ WebApp.connectHandlers.use("/receive", function(req, res, next) {
       obj[body[i][0]]=body[i][1];
       temparray.push(obj);
     }
+    console.log(obj);
     var Allpay = require("allpay");
     var allpay = new Allpay({
       merchantID: data.settings.merchantID || "2000132",
