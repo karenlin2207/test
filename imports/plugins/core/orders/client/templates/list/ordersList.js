@@ -62,29 +62,13 @@ Template.dashboardOrdersList.helpers({
         ReturnURL: "https://ec2-52-43-22-203.us-west-2.compute.amazonaws.com/receive",
         ChoosePayment: "ALL"
       };
-      var data = Packages.findOne({ 
-        name: "allPay",
-              shopId: Reaction.getShopId()
-            });
-      var Allpay = require("allpay");
-      var allpay = new Allpay({
-        merchantID: data.settings.merchantID || "2000132",
-        hashKey: data.settings.hashKey || "5294y06JbISpM5x9",
-        hashIV: data.settings.hashIV || "v77hoKGq4kWxNNIS",
-        mode: "test",
-        debug: true
-      });
 
-      allpay.setHost({
-        baseUrl: "payment-stage.allpay.com.tw",
-        port: 80,
-        useSSL: false
+      allpaycheckout = Meteor.call("checkoutMac", cartInfo,function(err, result){
+        allpaycheckout = result.html;
+        Session.set("allpaycheckout", result.html);
       });
-
-      allpay.aioCheckOut(cartInfo, function(err, result) {
-          allpaycheckout = result.html;
-        });
-      return allpaycheckout;
+    
+      return Session.get('allpaycheckout');
   },
   orderAge() {
     return moment(this.createdAt).fromNow();
@@ -103,16 +87,5 @@ Template.dashboardOrdersList.events({
   'click #allpaybutton': function(event){
     var form = document.getElementById("_allpayForm");
     form.submit();
-  },
-  'click #ad': function(event){
-   var familys = {'name' : 'Bruce',
-   'age' : 18,
-   'sex' : 'male'};
-
-var jsonData = JSON.stringify(familys);
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST','http://54.68.144.14:3000/receive');
-    xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.send(jsonData);
   }
 });

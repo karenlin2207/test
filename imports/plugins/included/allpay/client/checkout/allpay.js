@@ -18,25 +18,7 @@ function paymentAlert(errorMessage) {
   return $(".alert").removeClass("hidden").text(errorMessage);
 }
 
-function hidePaymentAlert() {
-  return $(".alert").addClass("hidden").text("");
-}
-
-function handleallpaySubmitError(error) {
-  let serverError = error !== null ? error.message : void 0;
-  if (serverError) {
-    return paymentAlert("Oops! " + serverError);
-  } else if (error) {
-    return paymentAlert("Oops! " + error, null, 4);
-  }
-}
-
-
-Template.allpayPaymentForm.helpers({
-  allpayPayment() {
-    return allpayPayment;
-  },
-  allpaycheckout(){
+function  allpaycheckout(){
     var allpaycheckout;
     var items = Cart.findOne({ userId: Meteor.userId() }).items;
     var Items = new Array();
@@ -55,43 +37,44 @@ Template.allpayPaymentForm.helpers({
       ChoosePayment: "ALL"
     };
 
-    var data = Packages.findOne({ 
-      name: "allPay",
-            shopId: Reaction.getShopId()
-          });
-    var Allpay = require("allpay");
-    var allpay = new Allpay({
-      merchantID: data.settings.merchantID || "2000132",
-      hashKey: data.settings.hashKey || "5294y06JbISpM5x9",
-      hashIV: data.settings.hashIV || "v77hoKGq4kWxNNIS",
-      mode: "test",
-      debug: true
-    });
-
-    allpay.setHost({
-      baseUrl: "payment-stage.allpay.com.tw",
-      port: 80,
-      useSSL: false
-    });
-
-    allpay.aioCheckOut(cartInfo, function(err, result) {
-        allpaycheckout = result.html;
-        console.log(result.html);
+    allpaycheckout = Meteor.call("checkoutMac", cartInfo,function(err, result){
+        allpaycheckout = result.data;
+        Session.set("allpaycheckout", result.data);
       });
-    return allpaycheckout;
+    return Session.get('allpaycheckout');
+  }
+
+function hidePaymentAlert() {
+  return $(".alert").addClass("hidden").text("");
+}
+
+function handleallpaySubmitError(error) {
+  let serverError = error !== null ? error.message : void 0;
+  if (serverError) {
+    return paymentAlert("Oops! " + serverError);
+  } else if (error) {
+    return paymentAlert("Oops! " + error, null, 4);
+  }
+}
+
+
+Template.allpayPaymentForm.helpers({
+  allpayPayment() {
+    return allpayPayment;
   }
 });
 
 Template.allpayPaymentForm.events({
   'click #allpaybutton': function(event){
     event.preventDefault();
+    var doc = allpaycheckout();
     var paymentMethod = {
             processor: "AllPay",
             storedCard: "AllPay",
             method: "AllPay Payment",
-            transactionId: document.getElementsByName("MerchantID")[0].value ,
+            transactionId: doc.CheckMacValue ,
             currency: "NTD",
-            amount: parseInt(document.getElementsByName("TotalAmount")[0].value),
+            amount: doc.TotalAmount,
             status: "new",
             paymentstatus: "unpaid",
             mode: "authorize",
@@ -99,8 +82,8 @@ Template.allpayPaymentForm.events({
             transactions: []
           };
           response={
-          amount: parseInt(document.getElementsByName("TotalAmount")[0].value),
-          transactionId: document.getElementsByName("MerchantID")[0].value,
+          amount: doc.TotalAmount,
+          transactionId: doc.CheckMacValue,
           currency: "NTD"
           };
           paymentMethod.transactions.push(response);
