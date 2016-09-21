@@ -42,7 +42,8 @@ WebApp.connectHandlers.use("/receive", function(req, res, next) {
     orders = Orders.findOne({cartId:obj.MerchantTradeNo});
     orders.billing[0].paymentMethod.paymentstatus = 'paid';
     console.log(orders.billing[0].paymentMethod);
-
+    Orders.update({cartId:obj.MerchantTradeNo},obj);
+    console.log(Orders.findOne({cartId:obj.MerchantTradeNo}));
     res.writeHead(200, {'Content-Type': 'application/json'});
     res.end("Hello world from: " + body + '\n');
   }));
