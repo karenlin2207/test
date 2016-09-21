@@ -38,7 +38,10 @@ WebApp.connectHandlers.use("/receive", function(req, res, next) {
     }
     console.log(obj);
     console.log(obj.MerchantTradeNo);
-    console.log(Orders.findOne({cartId:obj.MerchantTradeNo}));
+
+    orders = Orders.findOne({cartId:obj.MerchantTradeNo});
+    
+    console.log(orders.billing[0].paymentMethod);
 
     res.writeHead(200, {'Content-Type': 'application/json'});
     res.end("Hello world from: " + body + '\n');
