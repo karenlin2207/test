@@ -1,7 +1,3 @@
-import { Packages } from "/lib/collections";
-import { Reaction } from "/server/api";
-
-
 export default function () {
 
 console.log('[Receive]')
@@ -26,11 +22,7 @@ WebApp.connectHandlers.use("/receive", function(req, res, next) {
   var temparray = new Array();
   var obj={};
   console.log('[connectHandlers][receive]');
-  var data = Packages.findOne({ 
-  name: "allPay",
-  shopId: Reaction.getShopId()
-  });
-
+  
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, PUT, DELETE, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Origin, Content-Type, X-Auth-Token');
@@ -44,25 +36,8 @@ WebApp.connectHandlers.use("/receive", function(req, res, next) {
       obj[body[i][0]]=body[i][1];
       temparray.push(obj);
     }
-    var Allpay = require("allpay");
-    var allpay = new Allpay({
-      merchantID: data.settings.merchantID || "2000132",
-      hashKey: data.settings.hashKey || "5294y06JbISpM5x9",
-      hashIV: data.settings.hashIV || "v77hoKGq4kWxNNIS",
-      mode: "test",
-      debug: true
-    });
-
-    allpay.setHost({
-      baseUrl: "payment-stage.allpay.com.tw",
-      port: 80,
-      useSSL: false
-    });
-    var checkMacValue = allpay.genCheckMacValue(obj);
-    console.log(checkMacValue);
     console.log(obj);
     console.log(obj.RtnCode);
-
     res.writeHead(200, {'Content-Type': 'application/json'});
     res.end("Hello world from: " + body + '\n');
   }));
