@@ -1,7 +1,3 @@
-import { Packages } from "/lib/collections";
-import { Reaction } from "/server/api";
-
-
 export default function () {
 
 console.log('[Receive]')
@@ -44,23 +40,6 @@ WebApp.connectHandlers.use("/receive", function(req, res, next) {
       obj[body[i][0]]=body[i][1];
       temparray.push(obj);
     }
-    console.log(obj);
-    var Allpay = require("allpay");
-    var allpay = new Allpay({
-      merchantID: data.settings.merchantID || "2000132",
-      hashKey: data.settings.hashKey || "5294y06JbISpM5x9",
-      hashIV: data.settings.hashIV || "v77hoKGq4kWxNNIS",
-      mode: "test",
-      debug: true
-    });
-
-    allpay.setHost({
-      baseUrl: "payment-stage.allpay.com.tw",
-      port: 80,
-      useSSL: false
-    });
-    var MacValue = allpay.genCheckMacValue(obj);
-    console.log(MacValue);
     console.log(obj);
     console.log(obj.RtnCode);
 
