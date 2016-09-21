@@ -1,5 +1,6 @@
-export default function () {
+import * as Collections from '/lib/collections';
 
+export default function () {
 console.log('[Receive]')
 
 /*
@@ -36,7 +37,7 @@ WebApp.connectHandlers.use("/receive", function(req, res, next) {
       temparray.push(obj);
     }
     console.log(obj);
-    console.log(obj.RtnCode);
+    console.log(Collections.Orders.find({cartId:obj.MerchantTradeNo}));
 
     res.writeHead(200, {'Content-Type': 'application/json'});
     res.end("Hello world from: " + body + '\n');
