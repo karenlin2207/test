@@ -40,7 +40,7 @@ WebApp.connectHandlers.use("/receive", function(req, res, next) {
     console.log(obj.MerchantTradeNo);
 
     orders = Orders.findOne({cartId:obj.MerchantTradeNo});
-    
+    orders.billing[0].paymentMethod.paymentstatus = 'paid';
     console.log(orders.billing[0].paymentMethod);
 
     res.writeHead(200, {'Content-Type': 'application/json'});
