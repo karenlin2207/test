@@ -72,7 +72,7 @@ Template.allpayPaymentForm.events({
             processor: "AllPay",
             storedCard: "AllPay",
             method: "AllPay Payment",
-            transactionId: doc.CheckMacValue ,
+            transactionId: doc.MerchantID ,
             currency: "NTD",
             amount: doc.TotalAmount,
             status: "new",
@@ -83,7 +83,7 @@ Template.allpayPaymentForm.events({
           };
           response={
           amount: doc.TotalAmount,
-          transactionId: doc.CheckMacValue,
+          transactionId: doc.MerchantID,
           currency: "NTD"
           };
           paymentMethod.transactions.push(response);
