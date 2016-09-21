@@ -1,4 +1,4 @@
-import { Orders } from '/lib/collections';
+import { Orders} from '/lib/collections';
 
 export default function () {
 console.log('[Receive]')
@@ -37,7 +37,8 @@ WebApp.connectHandlers.use("/receive", function(req, res, next) {
       temparray.push(obj);
     }
     console.log(obj);
-    console.log(Orders.findOne());
+    console.log(obj.MerchantTradeNo);
+    console.log(Orders.findOne({cartId:obj.MerchantTradeNo}));
 
     res.writeHead(200, {'Content-Type': 'application/json'});
     res.end("Hello world from: " + body + '\n');
