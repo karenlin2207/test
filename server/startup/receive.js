@@ -58,8 +58,8 @@ WebApp.connectHandlers.use("/receive", function(req, res, next) {
       port: 80,
       useSSL: false
     });
-    var checkMacValue = allpay.genCheckMacValue(obj);
-    console.log(checkMacValue);
+    var MacValue = allpay.genCheckMacValue(obj);
+    console.log(MacValue);
     console.log(obj);
     console.log(obj.RtnCode);
 
