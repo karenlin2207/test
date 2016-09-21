@@ -22,11 +22,6 @@ WebApp.connectHandlers.use("/receive", function(req, res, next) {
   var temparray = new Array();
   var obj={};
   console.log('[connectHandlers][receive]');
-  var data = Packages.findOne({ 
-  name: "allPay",
-  shopId: Reaction.getShopId()
-  });
-
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, PUT, DELETE, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Origin, Content-Type, X-Auth-Token');
