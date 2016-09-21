@@ -1,3 +1,5 @@
+import { Packages } from "/lib/collections";
+
 export default function () {
 
 console.log('[Receive]')
