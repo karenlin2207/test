@@ -45,7 +45,6 @@ WebApp.connectHandlers.use("/receive", function(req, res, next) {
       temparray.push(obj);
     }
     console.log(obj);
-    console.log(obj.MerchantTradeNo);
 
     orders = Orders.findOne({cartId:obj.MerchantTradeNo});
 
@@ -63,8 +62,7 @@ WebApp.connectHandlers.use("/receive", function(req, res, next) {
         port: 80,
         useSSL: false
       });
-      objresult = allpay.genCheckMacValue(obj);
-      console.log(obj);
+
       result = allpay.isDataValid(obj);
     Orders.update({
       "cartId":obj.MerchantTradeNo,
