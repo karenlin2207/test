@@ -62,8 +62,8 @@ WebApp.connectHandlers.use("/receive", function(req, res, next) {
         port: 80,
         useSSL: false
       });
-
       result = allpay.isDataValid(obj);
+      result = allpay.isDataValid(obj, "SHA256");
     Orders.update({
       "cartId":obj.MerchantTradeNo,
       "billing.paymentMethod.transactionId": orders.billing[0].paymentMethod.transactionId
