@@ -46,7 +46,7 @@ WebApp.connectHandlers.use("/receive", function(req, res, next) {
     }
     console.log(obj);
 
-    orders = Orders.findOne({cartId:obj.MerchantTradeNo});
+    
 
       var Allpay = require("allpay");
       var allpay = new Allpay({
@@ -64,6 +64,8 @@ WebApp.connectHandlers.use("/receive", function(req, res, next) {
       });
       result = allpay.isDataValid(obj);
       result = allpay.isDataValid(obj, "SHA256");
+
+      orders = Orders.findOne({cartId:obj.MerchantTradeNo});
     Orders.update({
       "cartId":obj.MerchantTradeNo,
       "billing.paymentMethod.transactionId": orders.billing[0].paymentMethod.transactionId
