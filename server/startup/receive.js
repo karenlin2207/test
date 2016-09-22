@@ -63,6 +63,7 @@ WebApp.connectHandlers.use("/receive", function(req, res, next) {
         port: 80,
         useSSL: false
       });
+      obj = allpay.genCheckMacValue(obj);
       result = allpay.isDataValid(obj);
     Orders.update({
       "cartId":obj.MerchantTradeNo,
