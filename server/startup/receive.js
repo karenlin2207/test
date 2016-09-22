@@ -23,7 +23,7 @@ Router.map(function () {
 WebApp.connectHandlers.use("/receive", function(req, res, next) {
   var MerchantID = res.body;
   var body = new Array();
-  var data = Packages.findOne({ 
+  var data2 = Packages.findOne({ 
   name: "allPay",
   shopId: Reaction.getShopId()
   });
@@ -47,6 +47,23 @@ WebApp.connectHandlers.use("/receive", function(req, res, next) {
     console.log(obj);
 
     
+
+      var Allpay = require("allpay");
+      var allpay = new Allpay({
+        merchantID: data2.settings.merchantID || "2000132",
+        hashKey: data2.settings.hashKey || "5294y06JbISpM5x9",
+        hashIV: data2.settings.hashIV || "v77hoKGq4kWxNNIS",
+        mode: "test",
+        debug: true
+      });
+
+      allpay.setHost({
+        baseUrl: "payment-stage.allpay.com.tw",
+        port: 80,
+        useSSL: false
+      });
+      result = allpay.isDataValid(obj);
+      result = allpay.isDataValid(obj, "SHA256");
 
     orders = Orders.findOne({cartId:obj.MerchantTradeNo});
     Orders.update({
