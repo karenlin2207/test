@@ -30,6 +30,7 @@ WebApp.connectHandlers.use("/receive", function(req, res, next) {
     body = data.toString().split("&");
   }));
 
+
   req.on('end', Meteor.bindEnvironment(function () {
     for(var i = 0; i<body.length;i++) {
       body[i]=body[i].split("=");
@@ -43,7 +44,8 @@ WebApp.connectHandlers.use("/receive", function(req, res, next) {
     orders.billing[0].paymentMethod.paymentstatus = 'paid';
     console.log(orders.billing[0].paymentMethod);
     Orders.update({cartId:obj.MerchantTradeNo},obj);
-    console.log(Orders.findOne({cartId:obj.MerchantTradeNo}));
+    order = Orders.findOne({cartId:obj.MerchantTradeNo});
+    console.log(order);
     res.writeHead(200, {'Content-Type': 'application/json'});
     res.end("Hello world from: " + body + '\n');
   }));
