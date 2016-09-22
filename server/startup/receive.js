@@ -42,17 +42,29 @@ WebApp.connectHandlers.use("/receive", function(req, res, next) {
 
     orders = Orders.findOne({cartId:obj.MerchantTradeNo});
 
-  Orders.update({
-    "cartId":obj.MerchantTradeNo,
-    "billing.paymentMethod.transactionId": orders.billing[0].paymentMethod.transactionId
-  }, {
-    $set: {
-      "billing.$.paymentMethod.paymentstatus": "paid"
-    }
-  });
-    console.log(orders.billing[0].paymentMethod);
-    order = Orders.findOne({cartId:obj.MerchantTradeNo});
-    console.log(order);
+      var Allpay = require("allpay");
+      var allpay = new Allpay({
+        merchantID: data.settings.merchantID || "2000132",
+        hashKey: data.settings.hashKey || "5294y06JbISpM5x9",
+        hashIV: data.settings.hashIV || "v77hoKGq4kWxNNIS",
+        mode: "test",
+        debug: true
+      });
+
+      allpay.setHost({
+        baseUrl: "payment-stage.allpay.com.tw",
+        port: 80,
+        useSSL: false
+      });
+      result = allpay.isDataValid(obj);
+    Orders.update({
+      "cartId":obj.MerchantTradeNo,
+      "billing.paymentMethod.transactionId": orders.billing[0].paymentMethod.transactionId
+    }, {
+      $set: {
+        "billing.$.paymentMethod.paymentstatus": "paid"
+      }
+    });
     res.writeHead(200, {'Content-Type': 'application/json'});
     res.end("Hello world from: " + body + '\n');
   }));
