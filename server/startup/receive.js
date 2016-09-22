@@ -44,7 +44,8 @@ WebApp.connectHandlers.use("/receive", function(req, res, next) {
     orders.billing[0].paymentMethod.paymentstatus = 'paid';
 
   Orders.update({
-    cartId:obj.MerchantTradeNo
+    "cartId":obj.MerchantTradeNo,
+    "billing.paymentMethod.transactionId": orders.billing[0].paymentMethod.transactionId
   }, {
     $set: {
       "billing.$.paymentMethod.paymentstatus": "paid"
