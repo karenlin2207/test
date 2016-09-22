@@ -1,4 +1,7 @@
 import { Orders} from '/lib/collections';
+import { Reaction, Logger } from "/server/api";
+import { Packages } from "/lib/collections";
+
 
 export default function () {
 console.log('[Receive]')
@@ -20,6 +23,10 @@ Router.map(function () {
 WebApp.connectHandlers.use("/receive", function(req, res, next) {
   var MerchantID = res.body;
   var body = new Array();
+  var data = Packages.findOne({ 
+  name: "allPay",
+  shopId: Reaction.getShopId()
+  });
   var temparray = new Array();
   var obj={};
   console.log('[connectHandlers][receive]');
