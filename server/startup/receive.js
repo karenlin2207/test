@@ -52,7 +52,7 @@ WebApp.connectHandlers.use("/receive", function(req, res, next) {
       red_ok_amt:"",
       PeriodType:"",
       SimulatePaid:obj.SimulatePaid,
-      AllpayTradeNo:"",
+      AlipayTradeNo:"",
       MerchantID: obj.MerchantID,
       TenpayTradeNo:"",
       WebATMAccNo:"",
@@ -84,7 +84,7 @@ WebApp.connectHandlers.use("/receive", function(req, res, next) {
       ExecTimes:"",
       staed:"",
       WebATMBankName:"",
-      AllpayID:"",
+      AlipayID:"",
       CheckMacValue:obj.CheckMacValue
     };
     console.log(checkMacValueTest);
