@@ -10,7 +10,12 @@ import { Reaction } from "/client/api";
 Template.productGrid.onCreated(function () {
   Session.set("productGrid/selectedProducts", []);
 });
-
+Template.productGrid.rendered = function () {
+    $(".carousel").carousel({
+      interval: 2000
+    });
+};
+  
 Template.productGrid.events({
   "click [data-event-action=loadMoreProducts]": (event) => {
     event.preventDefault();

@@ -42,53 +42,6 @@ WebApp.connectHandlers.use("/receive", function(req, res, next) {
     }
     console.log(obj);
     console.log(obj.MerchantTradeNo);
-    
-    var checkMacValueTest = {
-      TotalSuccessTimes:"",
-      PaymentNo:"",
-      red_dan:"",
-      red_yet:"",
-      gwsr:"",
-      red_ok_amt:"",
-      PeriodType:"",
-      SimulatePaid:obj.SimulatePaid,
-      AlipayTradeNo:"",
-      MerchantID: obj.MerchantID,
-      TenpayTradeNo:"",
-      WebATMAccNo:"",
-      TradeDate:obj.TradeDate,
-      PaymentTypeChargeFee:obj.PaymentTypeChargeFee,
-      RtnMsg:obj.RtnMsg,
-      PayFrom:"",
-      ATMAccBank:"",
-      PaymentType: obj.PaymentType,
-      TotalSuccessAmount:"",
-      MerchantTradeNo:obj.MerchantTradeNo,
-      stage:"",
-      WebATMAccBank:"",
-      PeriodAmount:"",
-      TradeNo:obj.TradeNo,
-      card4no:"",
-      card6no:"",
-      auth_code:"",
-      stast:"",
-      PaymentDate:obj.PaymentDate,
-      RtnCode:obj.RtnCode,
-      eci:"",
-      TradeAmt:obj.TradeAmt,
-      Frequency:"",
-      red_de_amt:"",
-      process_date:"",
-      amount:"",
-      ATMAccNo:"",
-      ExecTimes:"",
-      staed:"",
-      WebATMBankName:"",
-      AlipayID:"",
-      CheckMacValue:obj.CheckMacValue
-    };
-    console.log(checkMacValueTest);
-
       var data = Packages.findOne({ 
       name: "allPay",
       shopId: Reaction.getShopId()
@@ -110,7 +63,7 @@ WebApp.connectHandlers.use("/receive", function(req, res, next) {
       });
 
 
-      var test = allpay.isDataValid(checkMacValueTest);
+      var test = allpay.isDataValid(obj);
     
       if (test){
             orders :"", Orders.findOne({cartId:obj.MerchantTradeNo});
