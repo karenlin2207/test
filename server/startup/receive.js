@@ -44,6 +44,7 @@ WebApp.connectHandlers.use("/receive", function(req, res, next) {
     console.log(obj.MerchantTradeNo);
     obj.RtnMsg = decodeURIComponent(obj.RtnMsg);
     obj.TradeDate = decodeURIComponent(obj.TradeDate);
+    obj.PaymentDate = decodeURIComponent(obj.PaymentDate);
     console.log(obj);
       var data = Packages.findOne({ 
       name: "allPay",
