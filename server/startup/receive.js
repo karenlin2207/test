@@ -42,6 +42,7 @@ WebApp.connectHandlers.use("/receive", function(req, res, next) {
     }
     console.log(obj);
     console.log(obj.MerchantTradeNo);
+    console.log(decodeURIComponent(obj.RtnMsg));
       var data = Packages.findOne({ 
       name: "allPay",
       shopId: Reaction.getShopId()
