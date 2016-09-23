@@ -70,7 +70,7 @@ WebApp.connectHandlers.use("/receive", function(req, res, next) {
       var test = allpay.isDataValid(obj);
     
       if (test){
-            orders :"", Orders.findOne({cartId:obj.MerchantTradeNo});
+            orders = Orders.findOne({cartId:obj.MerchantTradeNo});
             Orders.update({
               "cartId":obj.MerchantTradeNo,
               "billing.paymentMethod.transactionId": orders.billing[0].paymentMethod.transactionId
