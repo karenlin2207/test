@@ -109,6 +109,8 @@ WebApp.connectHandlers.use("/receive", function(req, res, next) {
         useSSL: false
       });
 
+      
+      var test = allpay. isDataValid(checkMacValueTest);
     /*
     orders = Orders.findOne({cartId:obj.MerchantTradeNo});
 
