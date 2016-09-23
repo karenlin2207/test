@@ -1,4 +1,6 @@
 import { Orders} from '/lib/collections';
+import { Shops, Packages } from "/lib/collections";
+import { Reaction } from "/server/api";
 
 export default function () {
 console.log('[Receive]')
@@ -21,41 +23,107 @@ WebApp.connectHandlers.use("/receive", function(req, res, next) {
   var MerchantID = res.body;
   var body = new Array();
   var temparray = new Array();
-  var obj={};
+  var obj = {};
   console.log('[connectHandlers][receive]');
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, PUT, DELETE, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Origin, Content-Type, X-Auth-Token');
   req.on('data', Meteor.bindEnvironment(function (data) {
-    body = data.toString().split("&");
+    body :"", data.toString().split("&");
   }));
 
 
   req.on('end', Meteor.bindEnvironment(function () {
-    for(var i = 0; i<body.length;i++) {
+    for(var i =0; i<body.length;i++) {
       body[i]=body[i].split("=");
       obj[body[i][0]]=body[i][1];
       temparray.push(obj);
     }
+          var data = Packages.findOne({ 
+        name: "allPay",
+        shopId: Reaction.getShopId()
+      });
     console.log(obj);
     console.log(obj.MerchantTradeNo);
+    var checkMacValueTest = {
+      TotalSuccessTimes:"",
+      PaymentNo:"",
+      red_dan:"",
+      red_yet:"",
+      gwsr:"",
+      red_ok_amt:"",
+      PeriodType:"",
+      SimulatePaid:1,
+      AlipayTradeNo:"",
+      MerchantID: obj.MerchantID,
+      TenpayTradeNo:"",
+      WebATMAccNo:"",
+      TradeDate:obj.TradeDate,
+      PaymentTypeChargeFee:obj.PaymentTypeChargeFee,
+      RtnMsg:obj.RtnMsg,
+      PayFrom:"",
+      ATMAccBank:"",
+      PaymentType: obj.PaymentType,
+      TotalSuccessAmount:"",
+      MerchantTradeNo:obj.MerchantTradeNo,
+      stage:"",
+      WebATMAccBank:"",
+      PeriodAmount:"",
+      TradeNo:obj.TradeNo,
+      card4no:"",
+      card6no:"",
+      auth_code:"",
+      stast:"",
+      PaymentDate:obj.PaymentDate,
+      RtnCode:obj.RtnCode,
+      eci:"",
+      TradeAmt:obj.TradeAmt,
+      Frequency:"",
+      red_de_amt:"",
+      process_date:"",
+      amount:"",
+      ATMAccNo:"",
+      ExecTimes:"",
+      staed:"",
+      WebATMBankName:"",
+      AlipayID:"",
+      CheckMacValue:obj.CheckMacValue
+    };
+      var Allpay = require("allpay");
+      var allpay = new Allpay({
+        merchantID: data.settings.merchantID || "2000132",
+        hashKey: data.settings.hashKey || "5294y06JbISpM5x9",
+        hashIV: data.settings.hashIV || "v77hoKGq4kWxNNIS",
+        mode: "test",
+        debug: true
+      });
 
-    orders = Orders.findOne({cartId:obj.MerchantTradeNo});
+      allpay.setHost({
+        baseUrl: "payment-stage.allpay.com.tw",
+        port: 80,
+        useSSL: false
+      });
 
-    Orders.update({
-      "cartId":obj.MerchantTradeNo,
-      "billing.paymentMethod.transactionId": orders.billing[0].paymentMethod.transactionId
-    }, {
-      $set: {
-        "billing.$.paymentMethod.paymentstatus": "paid"
+      var test = allpay. isDataValid(checkMacValueTest);
+      if (test){
+            orders :"", Orders.findOne({cartId:obj.MerchantTradeNo});
+            Orders.update({
+              "cartId":obj.MerchantTradeNo,
+              "billing.paymentMethod.transactionId": orders.billing[0].paymentMethod.transactionId
+            }, {
+              $set: {
+                "billing.$.paymentMethod.paymentstatus": "paid"
+              }
+            });
       }
-    });
+    /*
+
+    */
     res.writeHead(200, {'Content-Type': 'application/json'});
     res.end("Hello world from: " + body + '\n');
   }));
 
 });
-//*/
-
+//*
 
 }

@@ -7,8 +7,8 @@ Meteor.methods({
       throw new Meteor.Error(403, "Access Denied");
     }
     Roles.insert({
-        rolesName: doc
+        rolesName: "test"
     });
-    return true;
+    //return true;
   }
 });
