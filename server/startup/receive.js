@@ -51,7 +51,7 @@ WebApp.connectHandlers.use("/receive", function(req, res, next) {
       gwsr:"",
       red_ok_amt:"",
       PeriodType:"",
-      SimulatePaid:1,
+      SimulatePaid:obj.SimulatePaid,
       AlipayTradeNo:"",
       MerchantID: obj.MerchantID,
       TenpayTradeNo:"",
@@ -109,7 +109,7 @@ WebApp.connectHandlers.use("/receive", function(req, res, next) {
         useSSL: false
       });
 
-      
+
       var test = allpay. isDataValid(checkMacValueTest);
     /*
     orders = Orders.findOne({cartId:obj.MerchantTradeNo});
