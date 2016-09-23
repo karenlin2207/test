@@ -45,7 +45,7 @@ Meteor.methods({
         useSSL: false
       });
 
-      allpay.genCheckMacValue(cartData, function(err, result) {
+      allpay.aioCheckOut(cartData, function(err, result) {
           allpaycheckout = result;
       });
     return allpaycheckout;
