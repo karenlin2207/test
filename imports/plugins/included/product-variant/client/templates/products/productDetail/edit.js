@@ -25,6 +25,11 @@ Template.productDetailEdit.helpers({
  */
 
 Template.productDetailEdit.events({
+  "click #submitdescription":function(event){
+    const productId = ReactionProduct.selectedProductId();
+    var html = $('#description').summernote('code');
+    Meteor.call("products/updateProductField", productId, "description",html);
+  },
   "change input,textarea": function (event) {
     const self = this;
     const productId = ReactionProduct.selectedProductId();
@@ -96,5 +101,7 @@ Template.productDetailField.events({
  */
 
 Template.productDetailEdit.onRendered(function () {
-  return autosize($("textarea"));
+    $(document).ready(function() {
+      $('#description').summernote();
+    });
 });
