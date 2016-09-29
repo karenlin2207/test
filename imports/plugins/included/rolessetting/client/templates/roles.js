@@ -29,6 +29,13 @@ Template.roles.events({
   }
 });
 
+Template.addRoles.events({
+  "click .submitbtn": function(){
+    console.log("test");
+  }
+});
+
+
 Template.rolesTable.helpers({
   roles() {
     return Roles.find();
