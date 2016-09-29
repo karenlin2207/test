@@ -34,6 +34,7 @@ Template.addRoles.events({
     console.log("test");
     Roles.insert({'rolesName':"test"});
     //Meteor.call("addRoles","test");
+    console.log(Roles.find().fetch());
   }
 });
 
