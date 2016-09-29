@@ -14,7 +14,7 @@ Meteor.methods({
     });
 
 
-/*
+
     if (!Reaction.hasPermission("shipping")) {
       throw new Meteor.Error(403, "Access Denied");
     }
@@ -22,7 +22,7 @@ Meteor.methods({
     Roles.insert({
         rolesName: "test"
     });
-*/
+
     //return true;
   }
 });
