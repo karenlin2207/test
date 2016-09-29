@@ -12,6 +12,7 @@ const {
   Products,
   Shipping,
   Shops,
+  Roles,
   Tags,
   Templates,
   Translations
