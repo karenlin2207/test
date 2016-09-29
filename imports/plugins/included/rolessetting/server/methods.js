@@ -20,6 +20,7 @@ Meteor.methods({
       throw new Meteor.Error(403, "Access Denied");
     }
     console.log(Collections.Accounts.find().fetch());
+    Roles.clean(doc);
     Roles.insert({
         rolesName: "test"
     });
