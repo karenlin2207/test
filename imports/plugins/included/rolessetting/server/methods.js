@@ -1,6 +1,6 @@
 import { Roles } from "/lib/collections";
 import * as Collections from "/lib/collections";
-import { Roles } from "/lib/collections";
+import { Roles } from "/lib/collections/schemas";
 import { Reaction } from "/server/api";
 
 Meteor.methods({
