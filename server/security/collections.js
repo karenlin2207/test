@@ -101,6 +101,7 @@ export default function () {
     Shipping,
     Orders,
     Packages,
+    Roles,
     Templates,
     Jobs
   ]).ifHasRole({
