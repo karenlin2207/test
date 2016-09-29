@@ -32,8 +32,8 @@ Template.roles.events({
 Template.addRoles.events({
   "click #submitbtn": function(){
     console.log("test");
-
-    Meteor.call("addRoles","test");
+    Roles.insert({'rolesName':"test"});
+    //Meteor.call("addRoles","test");
   }
 });
 
