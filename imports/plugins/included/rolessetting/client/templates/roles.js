@@ -1,6 +1,6 @@
 import { Reaction, i18next } from "/client/api";
-import { Packages } from "/lib/collections";
-import { Roles } from "/lib/collections/schemas";
+import { Packages, Roles } from "/lib/collections";
+//import { Roles } from "/lib/collections/schemas";
 import { Meteor } from "meteor/meteor";
 import { Session } from "meteor/session";
 import { Template } from "meteor/templating";
@@ -39,11 +39,13 @@ Template.addRoles.events({
   }
 });
 
+/*
 Template.addRoles.helpers({
   roles(){
     return Roles;
   }
 })
+*/
 
 Template.rolesTable.helpers({
   roles() {
