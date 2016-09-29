@@ -7,6 +7,7 @@ Meteor.methods({
 
     console.log("[addRoles][doc]", doc);
     check(doc,String);
+    var obj = {rolesName:doc};
     /*
     check(doc, {
 	rolesName: String,
@@ -20,10 +21,7 @@ Meteor.methods({
       throw new Meteor.Error(403, "Access Denied");
     }
     console.log(Collections.Accounts.find().fetch());
-    Roles.clean(doc);
-    Roles.insert({
-        rolesName: "test"
-    });
+    Roles.insert(obj);
 
     //return true;
   }
