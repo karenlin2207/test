@@ -6,13 +6,14 @@ Meteor.methods({
  addRoles: function (doc) {
 
     console.log("[addRoles][doc]", doc);
-
+    check(doc,String);
+    /*
     check(doc, {
 	rolesName: String,
 	//permissions: [String],
 	//shopId: String
     });
-
+    */
 
 
     if (!Reaction.hasPermission("shipping")) {
