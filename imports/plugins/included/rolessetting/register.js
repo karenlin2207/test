@@ -16,7 +16,11 @@ Reaction.registerPackage({
       priority: 1,
       container: "core",
       workflow: "coreDashboardWorkflow",
-      template: "roles"
+      template: "roles",
+      permissions: [{
+        label: "reaction-rolessetting",
+        permission: "reaction-rolessetting"
+      }]
     },
     {
       label: "Roles Settings",

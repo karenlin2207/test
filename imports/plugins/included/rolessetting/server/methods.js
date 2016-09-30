@@ -1,5 +1,4 @@
-import { Roles } from "/lib/collections";
-import * as Collections from "/lib/collections";
+import { setRoles } from "/lib/collections";
 import { Reaction } from "/server/api";
 
 Meteor.methods({
@@ -7,22 +6,19 @@ Meteor.methods({
 
     console.log("[addRoles][doc]", doc);
 
-    check(doc, {
+    /*check(doc, {
 	rolesName: String,
 	//permissions: [String],
 	//shopId: String
-    });
+    });*/
 
 
-/*
     if (!Reaction.hasPermission("shipping")) {
       throw new Meteor.Error(403, "Access Denied");
     }
-    console.log(Collections.Accounts.find().fetch());
-    Roles.insert({
+    setRoles.insert({
         rolesName: "test"
     });
-*/
-    //return true;
+    return true;
   }
 });

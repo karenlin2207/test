@@ -12,7 +12,7 @@ const {
   Products,
   Shipping,
   Shops,
-  Roles,
+  setRoles,
   Tags,
   Templates,
   Translations
@@ -101,7 +101,7 @@ export default function () {
     Shipping,
     Orders,
     Packages,
-    Roles,
+    setRoles,
     Templates,
     Jobs
   ]).ifHasRole({
@@ -159,7 +159,7 @@ export default function () {
     group: Reaction.getShopId()
   }).ifShopIdMatches().ifUserIdMatches().ifSessionIdMatches().allowInClientCode();
 
-  Roles.permit(["insert", "update", "remove"]).ifHasRole({
+  setRoles.permit(["insert", "update", "remove"]).ifHasRole({
     role: ["admin", "owner"],
     group: Reaction.getShopId()
   }).ifShopIdMatchesThisId().allowInClientCode();
