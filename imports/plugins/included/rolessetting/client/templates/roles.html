@@ -23,6 +23,14 @@
 <template name="addRoles">
   <div class="panel">
     <div class="panel-body">
+      <form id="roleSubmit">
+        <div class="col-md-12">
+          <input name="rolesName"/>
+        </div>
+      </form>
+        <button id="submitbtn">Submit</button>
+    </div>
+    <div class="panel-body">
         {{#autoForm
         collection=Collections.setRoles
         id="roles-add-form"

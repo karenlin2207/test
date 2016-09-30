@@ -1,5 +1,6 @@
 import { Reaction, i18next } from "/client/api";
 import { Packages, setRoles } from "/lib/collections";
+//import { Roles } from "/lib/collections/schemas";
 import { Meteor } from "meteor/meteor";
 import { Session } from "meteor/session";
 import { Template } from "meteor/templating";
@@ -28,6 +29,23 @@ Template.roles.events({
     });
   }
 });
+
+Template.addRoles.events({
+  "click #submitbtn": function(){
+    console.log("test");
+    setRoles.insert({'rolesName':"test"});
+    Meteor.call("addRoles","test");
+    console.log(setRoles.find().fetch());
+  }
+});
+
+/*
+Template.addRoles.helpers({
+  roles(){
+    return Roles;
+  }
+})
+*/
 
 Template.rolesTable.helpers({
   roles() {
