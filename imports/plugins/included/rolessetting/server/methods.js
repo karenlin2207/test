@@ -20,15 +20,17 @@ Meteor.methods({
         rolesName: doc.rolesName,
         shopId: doc.shopId
     });
-    //return true;
+    return true;
   },
   "searchRoles": function(){
+    console.log("[searchRoles]");
     console.log(setRoles.find({
         shopId: Reaction.getShopId()
       }).fetch());
     var result = setRoles.find({
         shopId: Reaction.getShopId()
       });
+    console.log("[result]", result.fetch());
     return result;
   }
 });

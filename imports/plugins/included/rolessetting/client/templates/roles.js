@@ -7,6 +7,14 @@ import { Session } from "meteor/session";
 import { Template } from "meteor/templating";
 import { Blaze } from "meteor/blaze";
 
+//
+Template.body.onCreated(function bodyOnCreated() {
+  this.state = new ReactiveDict();
+  Meteor.subscribe('setRoles');
+});
+
+
+
 /*
  * Template shipping Helpers
  */
@@ -49,16 +57,23 @@ Template.addRoles.helpers({
 })
 */
 
+
 Template.rolesTable.helpers({
   roles() {
+/*
     Meteor.call('searchRoles', function(error, result){
-      console.log("result");
+      console.log("[searchRoles][result]", result);
     });
     console.log(Packages.find({
       name: "reaction-shipping"
     }).fetch());
     console.log(setRoles.find().fetch());
     return Collections.setRoles.find();
+*/
+
+    var rolesData = Collections.setRoles.find();
+    console.log("[rolesData]", rolesData.count());
+    return rolesData.fetch();
   },
   selectedRoles() {
     let session = Session.get("selectedRoles");
@@ -67,6 +82,7 @@ Template.rolesTable.helpers({
     }
   }
 });
+
 
 
 AutoForm.hooks({
