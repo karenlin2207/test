@@ -38,7 +38,7 @@ function  allpaycheckout(){
     };
 
     allpaycheckout = Meteor.call("checkoutMac", cartInfo,function(err, result){
-        allpaycheckout = result.data;
+        //allpaycheckout = result.data;
         Session.set("allpaycheckout", result.data);
       });
     return Session.get('allpaycheckout');

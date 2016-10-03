@@ -1,6 +1,7 @@
 import { Reaction, i18next } from "/client/api";
-import { Packages, setRoles } from "/lib/collections";
-//import { Roles } from "/lib/collections/schemas";
+import { Packages} from "/lib/collections";
+import { setRoles } from "/lib/collections";
+import * as Collections from "/lib/collections";
 import { Meteor } from "meteor/meteor";
 import { Session } from "meteor/session";
 import { Template } from "meteor/templating";
@@ -32,10 +33,11 @@ Template.roles.events({
 
 Template.addRoles.events({
   "click #submitbtn": function(){
-    console.log("test");
-    setRoles.insert({'rolesName':"test"});
-    Meteor.call("addRoles","test");
-    console.log(setRoles.find().fetch());
+    var doc = {
+      rolesName: document.getElementById('rolesName').value,
+      shopId: Reaction.getShopId()
+    };
+    Meteor.call("addRoles",doc);
   }
 });
 
@@ -49,7 +51,14 @@ Template.addRoles.helpers({
 
 Template.rolesTable.helpers({
   roles() {
-    return setRoles.find();
+    Meteor.call('searchRoles', function(error, result){
+      console.log("result");
+    });
+    console.log(Packages.find({
+      name: "reaction-shipping"
+    }).fetch());
+    console.log(setRoles.find().fetch());
+    return Collections.setRoles.find();
   },
   selectedRoles() {
     let session = Session.get("selectedRoles");

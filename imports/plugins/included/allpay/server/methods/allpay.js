@@ -5,24 +5,7 @@ import { check, Match } from "meteor/check";
 import { HTTP } from 'meteor/http';
 // reaction modules
 import { Reaction, Logger } from "/server/api";
-// function chargeObj() {
-//   return {
-//     amount: "",
-//     currency: "",
-//     card: {},
-//     capture: true
-//   };
-// }
 
-// function parseCardData(data) {
-//   return {
-//     number: data.number,
-//     name: data.name,
-//     cvc: data.cvv2,
-//     expireMonth: data.expire_month,
-//     expireYear: data.expire_year
-//   };
-// }
 
 
 Meteor.methods({
@@ -46,7 +29,7 @@ Meteor.methods({
     var result;
     try {
       allpay.aioCheckOut(cartData, function(err, result) {
-        return console.log(result);
+        return result;
       });
     } catch (error) {
       Logger.warn(error);

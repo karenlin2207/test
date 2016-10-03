@@ -159,11 +159,6 @@ export default function () {
     group: Reaction.getShopId()
   }).ifShopIdMatches().ifUserIdMatches().ifSessionIdMatches().allowInClientCode();
 
-  setRoles.permit(["insert", "update", "remove"]).ifHasRole({
-    role: ["admin", "owner"],
-    group: Reaction.getShopId()
-  }).ifShopIdMatchesThisId().allowInClientCode();
-
   /*
    * Users may update their own account
    */
