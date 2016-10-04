@@ -204,7 +204,8 @@ Template.editRoles.helpers({
     return permissionGroups;
   },
 
-  hasManyPermissions: function (permissions) {
+  hasManyPermissions: function (permissions,id) {
+    console.log(permissions);
     return Boolean(permissions.length);
   },
 
