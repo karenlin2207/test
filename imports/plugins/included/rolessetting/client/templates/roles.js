@@ -56,15 +56,11 @@ Template.addRoles.helpers({
 })
 */
 Template.rolesTable.events({
-  showeditRoles() {
-  Reaction.showActionView({
-    label: i18next.t("Roles.editRoles"),
-    data: this,
-    template: "editRoles"
-  });
-
-  Session.set("updatedMethodObj", "");
-  Session.set("selectedMethodObj", this);
+  "click [data-event-action=editRoles]": function () {
+    Reaction.showActionView({
+      label: i18next.t("Roles.editRoles"),
+      template: "editRoles"
+    });
   }
 });
 
