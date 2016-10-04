@@ -15,44 +15,42 @@
 
 <template name="rolesTable">
   <div class="panel panel-default">
-    <div class="panel-body">
-      <table class="table table-striped">
-        <thead>
-          <tr class="info">
-            <th>{{i18n "shippingMethod.name" "Name"}}</th>
-            <th>{{i18n "shippingMethod.label" "Permissions"}}</th>
-            <th><i class="fa fa-plus pull-right add-shipping-method" title="{{i18n 'shipping.addShippingMethod' 'Add shipping method'}}" data-event-action="addShippingMethod"></i></th>
-          </tr>
-        </thead>
-        <tbody>
-        {{#if selectedAddShippingMethod}}
-          <tr class="active">
-          <td colspan="8">
-          {{> addShippingMethod id=this._id}}
+    <table class="table table-striped">
+      <thead>
+        <tr class="info">
+          <th>{{i18n "shippingMethod.name" "Name"}}</th>
+          <th>{{i18n "shippingMethod.label" "Permissions"}}</th>
+          <th><i class="fa fa-plus pull-right add-shipping-method" title="{{i18n 'shipping.addShippingMethod' 'Add shipping method'}}" data-event-action="addShippingMethod"></i></th>
+        </tr>
+      </thead>
+      <tbody>
+      {{#if selectedAddShippingMethod}}
+        <tr class="active">
+        <td colspan="8">
+        {{> addShippingMethod id=this._id}}
+        </td>
+        </tr>
+      {{/if}}
+      {{#each roles}}
+        <tr class="edit-shipping-method" data-event-action="editShippingMethod">
+          <td>{{rolesName}}</td>
+          <td>{{permissions}}</td>
+          <td class="text-right">
+            <i class="fa fa-cog edit-shipping-method" title="{{i18n 'shipping.editRoles' 'Edit Roles Permissions'}}" data-event-action="editRoles"></i>
+            <i class="fa fa-trash delete-shipping-method" data-provider-id="{{../_id}}" title="{{i18n 'shipping.deleteRoles' 'Delete Roles'}}" data-event-action="deleteRoles"></i>
           </td>
-          </tr>
+        </tr>
+        {{#if selectedRoles}}
+        <tr class="active">
+          <td colspan="8">
+            {{> editRoles}}
+          </td>
+        </tr>
         {{/if}}
-        {{#each roles}}
-          <tr class="edit-shipping-method" data-event-action="editShippingMethod">
-            <td>{{rolesName}}</td>
-            <td>{{permissions}}</td>
-            <td class="text-right">
-              <i class="fa fa-cog edit-shipping-method" title="{{i18n 'shipping.editRoles' 'Edit Roles Permissions'}}" data-event-action="editRoles"></i>
-              <i class="fa fa-trash delete-shipping-method" data-provider-id="{{../_id}}" title="{{i18n 'shipping.deleteRoles' 'Delete Roles'}}" data-event-action="deleteRoles"></i>
-            </td>
-          </tr>
-          {{#if selectedRoles}}
-          <tr class="active">
-            <td colspan="8">
-              {{> editRoles}}
-            </td>
-          </tr>
-          {{/if}}
-        {{/each}}
-        </tbody>
-      </table>
-      {{>addRoles}}
-    </div>
+      {{/each}}
+      </tbody>
+    </table>  
+    {{>addRoles}}
   </div>
 </template>
 
