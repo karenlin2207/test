@@ -70,7 +70,7 @@ Template.rolesTable.helpers({
       return this;
     }
   },
-  "click [data-event-action=editRoles]"(event) {
+  "click [data-event-action=editRoles]": function () {
   event.preventDefault();
   Reaction.showActionView({
     label: i18next.t("Roles.editRoles"),
