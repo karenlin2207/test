@@ -22,13 +22,8 @@
             <i class="fa fa-cog" id="edit-shipping-provider" title="{{i18n 'shipping.editShippingProvider' 'Edit shipping provider'}}"></i>
           </span>
         </div>
-        {{#if selectedShippingProvider}}
-          <div class="panel-body">
-          {{> updateShippingProvider}}
-          </div>
-        {{/if}}
         <div class="panel-body">
-        {{#if methods}}
+        {{#if rolesname}}
           <table class="table table-striped">
             <thead>
               <tr class="info">
@@ -50,9 +45,8 @@
               </td>
               </tr>
             {{/if}}
-            {{#each methods}}
               <tr class="edit-shipping-method" data-event-action="editShippingMethod">
-                <td>{{name}}</td>
+                <td>{{rolesName}}</td>
                 <td>{{label}}</td>
                 <td>{{group}}</td>
                 <td>{{formatPrice cost}}</td>
