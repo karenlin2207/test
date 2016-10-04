@@ -155,6 +155,7 @@ Template.editRoles.helpers({
     }
   },
   permissionGroups: function (thisShopId) {
+    console.log(this._id);
     let permissionGroups = [];
     const shopId = Reaction.getShopId() || Template.currentData();
     const packages = Packages.find({
@@ -193,6 +194,7 @@ Template.editRoles.helpers({
         const label = pkg.name.replace("reaction", "").replace(/(-.)/g, function (x) {
           return " " + x[1].toUpperCase();
         });
+        console.log(this._id);
 
         return permissionGroups.push({
           shopId: pkg.shopId,
