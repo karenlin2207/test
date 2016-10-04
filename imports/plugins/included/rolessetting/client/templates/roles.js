@@ -58,7 +58,7 @@ Template.addRoles.helpers({
 Template.rolesTable.events({
   "click [data-event-action=editRoles]": function () {
     Reaction.showActionView({
-      label: "edit Roles",
+      label: "Edit Role",
       data: this,
       template: "editRoles"
     });
