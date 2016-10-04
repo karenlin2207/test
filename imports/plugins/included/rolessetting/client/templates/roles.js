@@ -63,7 +63,7 @@ Template.rolesTable.helpers({
     console.log("[rolesData]", rolesData.count());
     return rolesData.fetch();
   },
-  "click [data-event-action=showeditRoles]": function () {
+  "showeditRoles": function () {
   Reaction.showActionView({
     label: i18next.t("Roles.editRoles"),
     data: this,
