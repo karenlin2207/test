@@ -153,6 +153,7 @@ Template.editRoles.helpers({
   permissionGroups: function (thisShopId) {
     console.log(this._id);
     let permissionGroups = [];
+    const id = this._id;
     const shopId = Reaction.getShopId() || Template.currentData();
     const packages = Packages.find({
       shopId: shopId
@@ -195,7 +196,7 @@ Template.editRoles.helpers({
           icon: pkg.icon,
           name: pkg.name,
           label: label,
-          id:this._id,
+          id:id,
           permissions: _.uniq(permissions)
         });
       }
