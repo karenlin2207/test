@@ -45,11 +45,12 @@ Meteor.methods({
     check(group, Match.Optional(String));
     this.unblock();
     try {
-      return setRoles.update(roleId,{
+      setRoles.update(roleId,{
         $pull:{
           permissions: permissions
         } 
       });
+      return true;
     } catch (error) {
       return Logger.info(error);
     }
