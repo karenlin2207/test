@@ -70,11 +70,11 @@
 
             <div class="panel-controls">
               <input type="checkbox" class="checkbox-switch"
-                id="permissions-{{name}}-{{../../userId}}"
-                data-userId="{{../../userId}}"
+                id="permissions-{{name}}-{{id}}"
+                data-userId="{{id}}"
                 data-permission="{{name}}"
-                {{hasPermissionChecked name ../../userId}}
-                {{isOwnerDisabled ../../userId}}
+                {{hasPermissionChecked name id}}
+                {{isOwnerDisabled id}}
                 data-event-action="toggleMemberPermission"
                 disabled="{{hasthisPermissions name}}"
               />
@@ -86,19 +86,19 @@
               {{#each permissions}}
                 <li class="list-group-item shop-member-permission flex">
                   <div class="flex-item-fill">
-                    <label for="sub-permissions-{{name}}-{{../../userId}}">
+                    <label for="sub-permissions-{{name}}-{{id}}">
                       <i class="{{orElse icon 'fa fa-gear'}}"></i> {{label}}
                     </label>
                   </div>
 
                   <div class="flex-item-static">
                     <input class="checkbox-switch"
-                      id="sub-permissions-{{name}}-{{../../userId}}"
+                      id="sub-permissions-{{name}}-{{id}}"
                       type="checkbox"
-                      data-userId="{{../../../userId}}"
+                      data-userId="{{../id}}"
                       data-permission="{{permission}}"
-                      {{hasPermissionChecked permission ../../../userId}}
-                      {{isOwnerDisabled ../../../userId}}
+                      {{hasPermissionChecked permission ../id}}
+                      {{isOwnerDisabled ../id}}
                       data-event-action="toggleMemberPermission"
                       disabled="{{hasthisPermissions permission}}"
                     />
