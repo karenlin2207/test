@@ -129,7 +129,7 @@ Template.editRoles.helpers({
     }
   },
   hasthisPermissions: function(permissions){
-    console.log(this._id);
+    console.log(id);
     if (!Roles.userIsInRole(Meteor.userId(), permissions, this.shopId)){
       return true;
     }else{
@@ -152,7 +152,6 @@ Template.editRoles.helpers({
     }
   },
   permissionGroups: function (thisShopId) {
-    console.log(this._id);
     let permissionGroups = [];
     const id = this._id;
     const shopId = Reaction.getShopId() || Template.currentData();
