@@ -33,13 +33,11 @@
             <i class="fa fa-trash delete-shipping-method" data-provider-id="{{../_id}}" title="{{i18n 'shipping.deleteRoles' 'Delete Roles'}}" data-event-action="deleteRoles"></i>
           </td>
         </tr>
-        {{#if selectedRoles}}
         <tr class="active">
           <td colspan="8">
             {{> editRoles}}
           </td>
         </tr>
-        {{/if}}
       {{/each}}
       </tbody>
     </table>  
