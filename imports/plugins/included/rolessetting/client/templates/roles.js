@@ -141,8 +141,8 @@ Template.editRoles.helpers({
       return "checked";
     }
   },
-  groupsForUser: function (groupUserId) {
-    return [this.shopId,this._id];
+  groupsForUser: function() {
+    return this._id;
   },
   shopLabel: function (thisShopId) {
     const shopId = thisShopId || Template.currentData();
