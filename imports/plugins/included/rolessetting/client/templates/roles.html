@@ -97,8 +97,8 @@
                       type="checkbox"
                       data-userId="{{../id}}"
                       data-permission="{{permission}}"
-                      {{hasPermissionChecked permission ../id}}
-                      {{isOwnerDisabled ../id}}
+                      {{hasPermissionChecked permission id}}
+                      {{isOwnerDisabled id}}
                       data-event-action="toggleMemberPermission"
                       disabled="{{hasthisPermissions permission}}"
                     />
