@@ -58,10 +58,11 @@ Template.addRoles.helpers({
 Template.rolesTable.events({
   "click [data-event-action=editRoles]": function () {
     Reaction.showActionView({
-      label: i18next.t("Roles.editRoles"),
+      label: "edit Roles",
       data: this,
       template: "editRoles"
     });
+    console.log(this);
     Session.set("updatedMethodObj", "");
     Session.set("selectedMethodObj", this);
   }
