@@ -55,23 +55,24 @@ Template.addRoles.helpers({
   }
 })
 */
+Template.rolesTable.events({
+  "click [data-event-action=showeditRoles]": function () {
+  Reaction.showActionView({
+    label: i18next.t("Roles.editRoles"),
+    data: this,
+    template: "editRoles"
+  });
 
+  Session.set("updatedMethodObj", "");
+  Session.set("selectedMethodObj", this);
+  }
+});
 
 Template.rolesTable.helpers({
   roles() {
     var rolesData = Collections.setRoles.find();
     console.log("[rolesData]", rolesData.count());
     return rolesData.fetch();
-  },
-  showeditRoles() {
-  Reaction.showActionView({
-    label: i18next.t("Roles.editRoles"),
-    data: this,
-    template: "editRoles"
-  });
-  alert();
-  Session.set("updatedMethodObj", "");
-  Session.set("selectedMethodObj", this);
   }
 });
 
