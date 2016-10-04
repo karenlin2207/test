@@ -2,7 +2,7 @@ import { setRoles } from "/lib/collections";
 import { Reaction } from "/server/api";
 
 Meteor.methods({
- "addRoles": function (doc) {
+  "addRoles": function (doc) {
     console.log("[addRoles][doc]", doc);
     check(doc, {
 	rolesName: String,
