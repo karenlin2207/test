@@ -103,9 +103,9 @@ Template.editRoles.events({
         throw new Meteor.Error(403,"You can't change this permissions!");
     }else {
       if ($(event.currentTarget).is(":checked")) {
-        Meteor.call("addRolePermissions", self._id, permissions, this.shopId);
+        Meteor.call("addRolePermissions", this._id, permissions, this.shopId);
       } else {
-        Meteor.call("removeRolePermissions", self._id, permissions, this.shopId);
+        Meteor.call("removeRolePermissions", this._id, permissions, this.shopId);
       }
     }
   },
