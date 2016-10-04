@@ -143,6 +143,7 @@ Template.editRoles.helpers({
   },
   groupsForUser: function (groupUserId) {
     let userId = groupUserId || Meteor.userId() || Template.parentData(1).userId;
+    console.log([this.shopId,this._id]);
     return [this.shopId,this._id];
   },
   shopLabel: function (thisShopId) {
@@ -156,6 +157,7 @@ Template.editRoles.helpers({
   },
   permissionGroups: function (thisShopId) {
     console.log(this._id);
+    console.log(thisShopId);
     let permissionGroups = [];
     const shopId = Reaction.getShopId() || Template.currentData();
     const packages = Packages.find({
