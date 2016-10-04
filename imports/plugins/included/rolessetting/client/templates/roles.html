@@ -33,11 +33,13 @@
             <i class="fa fa-trash delete-shipping-method" data-provider-id="{{../_id}}" title="{{i18n 'shipping.deleteRoles' 'Delete Roles'}}" data-event-action="deleteRoles"></i>
           </td>
         </tr>
+        {{#if selectedRoles}}
         <tr class="active">
           <td colspan="8">
             {{> editRoles}}
           </td>
         </tr>
+        {{/if}}
       {{/each}}
       </tbody>
     </table>  
@@ -59,8 +61,9 @@
 </template>
 
 <template name="editRoles">
+  <form id="editRoles">
     <div class="panel panel-default">
-      <div class="panel-heading">Update {{name}} rate</div>
+      <div class="panel-heading">Update {{Rolesname}} rate</div>
       <div class="panel-body">
         <div class="col-md-6">
           {{>afQuickField name='RolesName' autofocus=''}}
@@ -82,4 +85,5 @@
         </div>
       </div>
     </div>
+  </form>
 </template>
