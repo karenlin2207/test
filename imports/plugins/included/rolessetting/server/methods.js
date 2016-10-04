@@ -45,9 +45,9 @@ Meteor.methods({
     check(group, Match.Optional(String));
     this.unblock();
     try {
-        console.log(permissions);
+      console.log(permissions);
       setRoles.update(roleId,{
-        $pull:{
+        $set:{
           permissions: permissions
         } 
       });
