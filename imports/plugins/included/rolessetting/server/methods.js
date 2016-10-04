@@ -46,7 +46,7 @@ Meteor.methods({
     this.unblock();
     try {
       console.log(permissions);
-      setRoles.update(roleId,{
+      setRoles.update(_id:roleId,{
         $set:{
           permissions: permissions
         } 
