@@ -128,7 +128,9 @@ Template.editRoles.helpers({
       }
     }
   },
-  hasthisPermissions: function(permissions){
+  hasthisPermissions: function(permissions,id){
+    console.log(permissions);
+    console.log(id);
     if (!Roles.userIsInRole(Meteor.userId(), permissions, this.shopId)){
       return true;
     }else{
