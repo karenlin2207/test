@@ -199,6 +199,7 @@ Template.editRoles.helpers({
           icon: pkg.icon,
           name: pkg.name,
           label: label,
+          id:this._id,
           permissions: _.uniq(permissions)
         });
       }
