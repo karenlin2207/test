@@ -86,14 +86,14 @@
               {{#each permissions}}
                 <li class="list-group-item shop-member-permission flex">
                   <div class="flex-item-fill">
-                    <label for="sub-permissions-{{name}}-{{id}}">
+                    <label for="sub-permissions-{{permission}}-{{id}}">
                       <i class="{{orElse icon 'fa fa-gear'}}"></i> {{label}}
                     </label>
                   </div>
 
                   <div class="flex-item-static">
                     <input class="checkbox-switch"
-                      id="sub-permissions-{{name}}-{{id}}"
+                      id="sub-permissions-{{permission}}-{{id}}"
                       type="checkbox"
                       data-userId="{{id}}"
                       data-permission="{{permission}}"
