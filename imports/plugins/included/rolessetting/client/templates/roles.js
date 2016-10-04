@@ -121,7 +121,7 @@ Template.editRoles.events({
   }
 })
 Template.editRoles.helpers({
-    isOwnerDisabled: function () {
+  isOwnerDisabled: function () {
     if (Meteor.userId() === this.userId) {
       if (Roles.userIsInRole(this.userId, "owner", this.shopId)) {
         return true;
@@ -143,6 +143,7 @@ Template.editRoles.helpers({
   },
   groupsForUser: function (groupUserId) {
     let userId = groupUserId || Meteor.userId() || Template.parentData(1).userId;
+    consolo.log(Roles.getGroupsForUser(userId));
     return Roles.getGroupsForUser(userId);
   },
   shopLabel: function (thisShopId) {
