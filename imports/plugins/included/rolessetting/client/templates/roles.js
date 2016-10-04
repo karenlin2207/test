@@ -132,7 +132,7 @@ Template.editRoles.helpers({
     }
   },
   groupsForUser: function (groupUserId) {
-    let userId = groupUserId || this.userId || Template.parentData(1).userId;
+    let userId = groupUserId || Meteor.userId() || Template.parentData(1).userId;
     return Roles.getGroupsForUser(userId);
   },
   shopLabel: function (thisShopId) {
