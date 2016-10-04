@@ -62,7 +62,6 @@ Template.rolesTable.events({
       data: this,
       template: "editRoles"
     });
-    console.log(this);
     Session.set("updatedMethodObj", "");
     Session.set("selectedMethodObj", this);
   }
@@ -205,7 +204,6 @@ Template.editRoles.helpers({
   editRoles() {
   Doc = Session.get("updatedMethodObj") || Session.get("selectedMethodObj");
   if (Doc) {
-    console.log(Doc);
     return Doc;
   }
   }
