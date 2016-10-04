@@ -141,9 +141,6 @@ Template.editRoles.helpers({
       return "checked";
     }
   },
-  groupsForUser: function() {
-    return this._id;
-  },
   shopLabel: function (thisShopId) {
     const shopId = thisShopId || Template.currentData();
     let shop = Shops.findOne({

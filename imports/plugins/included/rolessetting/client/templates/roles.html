@@ -57,7 +57,6 @@
   <form id="editRoles">
     <div class="panel panel-default">
       <div class="panel-heading">Edit Roles <strong>{{this.rolesName}}</strong></div>
-    {{#each groupsForUser}}
     <div class="panel-group shop-member-groups">
       {{#each permissionGroups}}
         <div class="panel panel-default">
@@ -108,11 +107,9 @@
               {{/each}}
             </ul>
           {{/if}}
-
         </div>
       {{/each}}
       </div>
-    {{/each}}
 
       <div class="panel-footer">
         <div class="right">
