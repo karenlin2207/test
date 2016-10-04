@@ -69,7 +69,7 @@ Template.rolesTable.helpers({
     data: this,
     template: "editRoles"
   });
-
+  alert();
   Session.set("updatedMethodObj", "");
   Session.set("selectedMethodObj", this);
   }
