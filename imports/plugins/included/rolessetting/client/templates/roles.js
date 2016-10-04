@@ -89,4 +89,5 @@ Template.editRoles.helpers({
   if (Doc) {
     return Doc;
   }
+  }
 });
