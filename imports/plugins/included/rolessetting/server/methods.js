@@ -43,12 +43,13 @@ Meteor.methods({
     this.unblock();
     try {
       console.log(permissions);
+      var result = true;
       setRoles.update({_id:roleId},{
         $pull:{
           permissions: permissions
         } 
       });
-      return true;
+      return result;
     } catch (error) {
       return Logger.info(error);
     }
