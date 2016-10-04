@@ -6,6 +6,17 @@ import { Meteor } from "meteor/meteor";
 import { Session } from "meteor/session";
 import { Template } from "meteor/templating";
 
+
+
+
+const getPermissionMap = (permissions) => {
+  const permissionMap = {};
+  _.each(permissions, function (existing) {
+    permissionMap[existing.permission] = existing.label;
+  });
+  return permissionMap;
+};
+
 //
 Template.body.onCreated(function bodyOnCreated() {
   this.state = new ReactiveDict();
