@@ -182,7 +182,8 @@ Template.editRoles.helpers({
               shopId: pkg.shopId,
               permission: registryItem.name || pkg.name + "/" + registryItem.template, // launchdock-connect/connectDashboard
               icon: registryItem.icon,
-              label: registryItem.label || registryItem.provides || registryItem.route
+              label: registryItem.label || registryItem.provides || registryItem.route,
+              id:id
             });
           }
         }
