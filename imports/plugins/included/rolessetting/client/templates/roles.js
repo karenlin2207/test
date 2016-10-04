@@ -59,8 +59,11 @@ Template.rolesTable.events({
   "click [data-event-action=editRoles]": function () {
     Reaction.showActionView({
       label: i18next.t("Roles.editRoles"),
+      data: this,
       template: "editRoles"
     });
+    Session.set("updatedMethodObj", "");
+    Session.set("selectedMethodObj", this);
   }
 });
 
@@ -76,6 +79,7 @@ Template.editRoles.helpers({
   editRoles() {
   Doc = Session.get("updatedMethodObj") || Session.get("selectedMethodObj");
   if (Doc) {
+    console.log(Doc);
     return Doc;
   }
   }
