@@ -139,7 +139,7 @@ Template.editRoles.helpers({
     console.log(permission);
     console.log(id);
     var result = false;
-    var rolepermissions = setRoles.find({_id:id}).permissions;
+    var rolepermissions = Collections.setRoles.find({_id:id}).permissions;
     console.log(rolepermissions);
     if (result) {
       return "checked";
