@@ -56,7 +56,7 @@ Template.addRoles.helpers({
 })
 */
 Template.rolesTable.events({
-  "click [data-event-action=showeditRoles]": function () {
+  "showeditRoles": function () {
   Reaction.showActionView({
     label: i18next.t("Roles.editRoles"),
     data: this,
