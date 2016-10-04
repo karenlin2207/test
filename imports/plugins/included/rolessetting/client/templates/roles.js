@@ -128,9 +128,7 @@ Template.editRoles.helpers({
       }
     }
   },
-  hasthisPermissions: function(permissions,id){
-    console.log(permissions);
-    console.log(id);
+  hasthisPermissions: function(permissions){
     if (!Roles.userIsInRole(Meteor.userId(), permissions, this.shopId)){
       return true;
     }else{
@@ -138,6 +136,8 @@ Template.editRoles.helpers({
     }
   },
   hasPermissionChecked: function (permission, userId) {
+    console.log(permissions);
+    console.log(id);
     if (userId && Roles.userIsInRole(userId, permission, this.shopId || Roles.userIsInRole(userId, permission,
         Roles.GLOBAL_GROUP))) {
       return "checked";
