@@ -14,7 +14,6 @@
 </template>
 
 <template name="rolesTable">
-  {{#each roles}}
     <div class="panel panel-default">
       <div class="panel-heading" data-event-action="editShippingProvider">
         <span class="text-left">{{rolesName}}</span>
@@ -49,9 +48,9 @@
             </td>
             </tr>
           {{/if}}
-          {{#each methods}}
+          {{#each roles}}
             <tr class="edit-shipping-method" data-event-action="editShippingMethod">
-              <td>{{name}}</td>
+              <td>{{rolesName}}</td>
               <td>{{label}}</td>
               <td>{{group}}</td>
               <td>{{formatPrice cost}}</td>
@@ -79,11 +78,10 @@
           {{/each}}
           </tbody>
         </table>
+        <div class="alert alert-info" data-i18n="roles.noRoles">No Roles are configured.</div>
+        {{>addRoles}}
       </div>
     </div>
-  {{/each}}
-    <div class="alert alert-info" data-i18n="roles.noRoles">No Roles are configured.</div>
-    {{>addRoles}}
 </template>
 
 <template name="addRoles">
