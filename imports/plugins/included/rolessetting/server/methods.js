@@ -37,6 +37,9 @@ Meteor.methods({
     if (!Reaction.hasPermission("reaction-accounts", Meteor.userId(), group)) {
       throw new Meteor.Error(403, "Access denied");
     }
+    console.log(roleId);
+    console.log(permissions);
+    console.log(group);
     check(roleId, Match.OneOf(String, Array));
     check(permissions, Match.OneOf(String, Array));
     check(group, Match.Optional(String));

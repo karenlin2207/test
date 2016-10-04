@@ -105,7 +105,7 @@ Template.editRoles.events({
       if ($(event.currentTarget).is(":checked")) {
         Meteor.call("addRolePermissions", this._id, permissions, this.shopId);
       } else {
-        Meteor.call("accounts/removeUserPermissions", this._id, permissions, this.shopId);
+        Meteor.call("removeRolePermissions", this._id, permissions, this.shopId);
       }
     }
   },
