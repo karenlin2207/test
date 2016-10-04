@@ -18,19 +18,12 @@
     <table class="table table-striped">
       <thead>
         <tr class="info">
-          <th>{{i18n "shippingMethod.name" "Name"}}</th>
-          <th>{{i18n "shippingMethod.label" "Permissions"}}</th>
+          <th>{{i18n "Roles.name" "Roles Name"}}</th>
+          <th>{{i18n "Roles.Permissions" "Permissions"}}</th>
           <th><i class="fa fa-plus pull-right add-shipping-method" title="{{i18n 'shipping.addShippingMethod' 'Add shipping method'}}" data-event-action="addShippingMethod"></i></th>
         </tr>
       </thead>
       <tbody>
-      {{#if selectedAddShippingMethod}}
-        <tr class="active">
-        <td colspan="8">
-        {{> addShippingMethod id=this._id}}
-        </td>
-        </tr>
-      {{/if}}
       {{#each roles}}
         <tr class="edit-shipping-method" data-event-action="editShippingMethod">
           <td>{{rolesName}}</td>
@@ -62,7 +55,33 @@
           Role Name <input name="rolesName" id="rolesName"/>
         </div>
       </form>
-        <button id="submitbtn" class="btn btn-primary">Submit</button>
+        <button id="submitbtn" class="btn btn-primary">Add New Role</button>
     </div>
   </div>
+</template>
+
+<template name="editRoles">
+    <div class="panel panel-default">
+      <div class="panel-heading">Update {{name}} rate</div>
+      <div class="panel-body">
+        <div class="col-md-6">
+          {{>afQuickField name='RolesName' autofocus=''}}
+          {{>afQuickField name='permissions'}}
+          {{>afQuickField name='group'}}
+          {{>afQuickField name='enabled'}}
+        </div>
+        <div class="col-md-6">
+          {{>afQuickField name='cost'}}
+          {{>afQuickField name='handling'}}
+          {{>afQuickField name='rate'}}
+        </div>
+      </div>
+
+      <div class="panel-footer">
+        <div class="right">
+          <!-- <button type="button" class="btn btn-link" data-event-action="cancelShippingMethodEdit">Cancel</button> -->
+          <button type="submit" class="btn btn-primary">Update</button>
+        </div>
+      </div>
+    </div>
 </template>

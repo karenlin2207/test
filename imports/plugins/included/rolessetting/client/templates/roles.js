@@ -60,17 +60,6 @@ Template.addRoles.helpers({
 
 Template.rolesTable.helpers({
   roles() {
-/*
-    Meteor.call('searchRoles', function(error, result){
-      console.log("[searchRoles][result]", result);
-    });
-    console.log(Packages.find({
-      name: "reaction-shipping"
-    }).fetch());
-    console.log(setRoles.find().fetch());
-    return Collections.setRoles.find();
-*/
-
     var rolesData = Collections.setRoles.find();
     console.log("[rolesData]", rolesData.count());
     return rolesData.fetch();
@@ -80,19 +69,21 @@ Template.rolesTable.helpers({
     if (_.isEqual(this, session)) {
       return this;
     }
+  },
+  "click [data-event-action=editRoles]"(event) {
+  event.preventDefault();
+
+  Reaction.showActionView({
+    label: i18next.t("shipping.editShippingMethod"),
+    data: this,
+    template: "editRoles"
+  });
+
+  Session.set("updatedMethodObj", "");
+  Session.set("selectedMethodObj", this);
   }
 });
 
+Template.editRoles.helpers({
 
-
-AutoForm.hooks({
-  "roles-add-form": {
-    onSuccess() {
-      Reaction.toggleSession("selectedRoles");
-      return Alerts.inline(i18next.t("roles.RolesSaved"), "success", {
-        autoHide: true,
-        placement: "rolesPackage"
-      });
-    }
-  }
 });
