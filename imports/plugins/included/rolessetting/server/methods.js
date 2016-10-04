@@ -32,5 +32,24 @@ Meteor.methods({
       });
     console.log("[result]", result.fetch());
     return result;
-  }
+  },
+  "addRolePermissions": function (roleId, permissions, group) {
+    if (!Reaction.hasPermission("reaction-accounts", Meteor.userId(), group)) {
+      throw new Meteor.Error(403, "Access denied");
+    }
+    check(roleId, Match.OneOf(String, Array));
+    check(permissions, Match.OneOf(String, Array));
+    check(group, Match.Optional(String));
+    this.unblock();
+    try {
+      return setRoles.update(roleId,{
+        $set:{
+          permissions: permissions
+        } 
+      });
+    } catch (error) {
+      return Logger.info(error);
+    }
+  },
+
 });

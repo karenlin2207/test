@@ -88,7 +88,6 @@ Template.editRoles.events({
   "change [data-event-action=toggleMemberPermission]": function (event, template) {
     const self = this;
     let permissions = [];
-    const member = template.data;
     if (!this.shopId) {
       throw new Meteor.Error("Shop is required");
     }
@@ -104,9 +103,9 @@ Template.editRoles.events({
         throw new Meteor.Error(403,"You can't change this permissions!");
     }else {
       if ($(event.currentTarget).is(":checked")) {
-        Meteor.call("accounts/addUserPermissions", member.userId, permissions, this.shopId);
+        Meteor.call("addRolePermissions", this._id, permissions, this.shopId);
       } else {
-        Meteor.call("accounts/removeUserPermissions", member.userId, permissions, this.shopId);
+        Meteor.call("accounts/removeUserPermissions", this._id, permissions, this.shopId);
       }
     }
   },
