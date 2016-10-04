@@ -5,7 +5,6 @@ import * as Collections from "/lib/collections";
 import { Meteor } from "meteor/meteor";
 import { Session } from "meteor/session";
 import { Template } from "meteor/templating";
-import { Blaze } from "meteor/blaze";
 
 //
 Template.body.onCreated(function bodyOnCreated() {
@@ -64,14 +63,7 @@ Template.rolesTable.helpers({
     console.log("[rolesData]", rolesData.count());
     return rolesData.fetch();
   },
-  selectedRoles() {
-    let session = Session.get("selectedRoles");
-    if (_.isEqual(this, session)) {
-      return this;
-    }
-  },
-  "click [data-event-action=editRoles]": function () {
-  event.preventDefault();
+  "click [data-event-action=showeditRoles]": function () {
   Reaction.showActionView({
     label: i18next.t("Roles.editRoles"),
     data: this,
@@ -91,14 +83,3 @@ Template.editRoles.helpers({
   }
   }
 });
-
-Blaze.TemplateInstance.prototype.parentTemplate = function (levels = 1) {
-  let view = Blaze.currentView;
-  let numLevel = levels;
-  while (view) {
-    if (view.name.substring(0, 9) === "Template." && !numLevel--) {
-      return view.templateInstance();
-    }
-    view = view.parentView;
-  }
-};
