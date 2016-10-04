@@ -1,6 +1,13 @@
 import { setRoles } from "/lib/collections";
 import { Reaction } from "/server/api";
 
+
+setRoles.allow({
+  insert: function (userId, doc) {
+    return true;
+  }
+});
+
 Meteor.methods({
   "addRoles": function (doc) {
     console.log("[addRoles][doc]", doc);

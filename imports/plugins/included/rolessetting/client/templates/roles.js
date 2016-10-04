@@ -7,7 +7,11 @@ import { Session } from "meteor/session";
 import { Template } from "meteor/templating";
 
 
-
+setRoles.allow({
+  insert: function (userId, doc) {
+    return true;
+  }
+});
 
 const getPermissionMap = (permissions) => {
   const permissionMap = {};
