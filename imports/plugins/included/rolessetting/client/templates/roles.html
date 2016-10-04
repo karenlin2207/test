@@ -56,7 +56,7 @@
 <template name="editRoles">
   <form id="editRoles">
     <div class="panel panel-default">
-      <div class="panel-heading">Edit Roles <strong>{{this.rolesName}}</strong></div>
+      <div class="panel-heading">Edit Roles <strong>{{this.rolesName}}{{this._id}}</strong></div>
       {{#each groupsForUser}}
     <div class="panel-group shop-member-groups">
       {{#each permissionGroups}}
