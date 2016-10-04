@@ -1,9 +1,6 @@
 import { setRoles } from "/lib/collections";
 import { Reaction } from "/server/api";
 
-
-setRoles = new Mongo.Collection('setRoles');
-
 Meteor.methods({
   "addRoles": function (doc) {
     console.log("[addRoles][doc]", doc);
