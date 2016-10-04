@@ -80,6 +80,7 @@ Template.memberSettings.helpers({
   },
   permissionGroups: function (thisShopId) {
     let permissionGroups = [];
+    console.log(Template.currentData());
     const shopId = thisShopId || Template.currentData();
     const packages = Packages.find({
       shopId: shopId
