@@ -146,7 +146,7 @@ Template.editRoles.helpers({
   },
   permissionGroups: function (thisShopId) {
     let permissionGroups = [];
-    const shopId = Meteor.getShopId() || Template.currentData();
+    const shopId = Reaction.getShopId() || Template.currentData();
     const packages = Packages.find({
       shopId: shopId
     });
