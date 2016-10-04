@@ -136,7 +136,7 @@ Template.editRoles.helpers({
     }
   },
   hasPermissionChecked: function (permission, userId) {
-    console.log(permissions);
+    console.log(permission);
     console.log(id);
     if (userId && Roles.userIsInRole(userId, permission, this.shopId || Roles.userIsInRole(userId, permission,
         Roles.GLOBAL_GROUP))) {
