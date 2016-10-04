@@ -65,7 +65,7 @@
           <div class="panel-heading panel-heading-flex" data-event-action="expandPermission">
 
             <div class="panel-title">
-              <label for="permissions-{{name}}-{{../../this._id}}">
+              <label for="permissions-{{name}}-{{../../userId}}">
                 <i class="{{icon}}"></i> {{label}}
               </label>
             </div>
@@ -73,11 +73,11 @@
 
             <div class="panel-controls">
               <input type="checkbox" class="checkbox-switch"
-                id="permissions-{{name}}-{{../../this._id}}"
-                data-_id="{{../../this._id}}"
+                id="permissions-{{name}}-{{../../userId}}"
+                data-userId="{{../../userId}}"
                 data-permission="{{name}}"
-                {{hasPermissionChecked name ../../this._id}}
-                {{isOwnerDisabled ../../this._id}}
+                {{hasPermissionChecked name ../../userId}}
+                {{isOwnerDisabled ../../userId}}
                 data-event-action="toggleMemberPermission"
                 disabled="{{hasthisPermissions name}}"
               />
@@ -89,19 +89,19 @@
               {{#each permissions}}
                 <li class="list-group-item shop-member-permission flex">
                   <div class="flex-item-fill">
-                    <label for="sub-permissions-{{name}}-{{../../this._id}}">
+                    <label for="sub-permissions-{{name}}-{{../../userId}}">
                       <i class="{{orElse icon 'fa fa-gear'}}"></i> {{label}}
                     </label>
                   </div>
 
                   <div class="flex-item-static">
                     <input class="checkbox-switch"
-                      id="sub-permissions-{{name}}-{{../../this._id}}"
+                      id="sub-permissions-{{name}}-{{../../userId}}"
                       type="checkbox"
-                      data-_id="{{../../../this._id}}"
+                      data-userId="{{../../../userId}}"
                       data-permission="{{permission}}"
-                      {{hasPermissionChecked permission ../../../this._id}}
-                      {{isOwnerDisabled ../../../this._id}}
+                      {{hasPermissionChecked permission ../../../userId}}
+                      {{isOwnerDisabled ../../../userId}}
                       data-event-action="toggleMemberPermission"
                       disabled="{{hasthisPermissions permission}}"
                     />
