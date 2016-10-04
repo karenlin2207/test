@@ -46,7 +46,7 @@ Meteor.methods({
     this.unblock();
     try {
       return setRoles.update(roleId,{
-        $set:{
+        $pull:{
           permissions: permissions
         } 
       });
