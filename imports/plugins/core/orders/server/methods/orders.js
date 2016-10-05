@@ -40,7 +40,7 @@ Meteor.methods({
       });
 
       allpay.setHost({
-        baseUrl: "payment-stage.allpay.com.tw",
+        baseUrl: "payment.allpay.com.tw",
         port: 80,
         useSSL: false
       });
