@@ -15,6 +15,11 @@
           <input type="radio" data-i18n="accountsUI.AdminRoles" name="Roles" value="0" >Adminstrate
           <input type="radio" data-i18n="accountsUI.SupervisorRoles" name="Roles" value="1" >Supervisor
           <input type="radio" data-i18n="accountsUI.GuestRoles" name="Roles" value="2" >Guest
+          {{#each roles}}
+            {{#if permissions}}
+            <input type="radio" data-i18n="accountsUI.GuestRoles" name="Roles" value="{{_id}}" >{{rolesName}}
+            {{/if}}
+          {{/each}}
         </div>
         <button type="submit" class="btn btn-primary">
           <span data-i18n="accountsUI.info.sendInvitation">Send invitation</span>

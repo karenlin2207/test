@@ -1,5 +1,6 @@
 import { setRoles } from "/lib/collections";
 import { Reaction } from "/server/api";
+import { Logger } from "/server/api";
 
 Meteor.methods({
   "addRoles": function (doc) {
@@ -43,16 +44,38 @@ Meteor.methods({
     this.unblock();
     try {
       console.log(permissions);
-      var result = true;
-      setRoles.update({_id:roleId},{
-        $pull:{
-          permissions: permissions
+      return setRoles.update({_id:roleId},{
+        $addToSet:{
+            permissions: { 
+                $each:
+                    permissions
+            }
         } 
       });
-      return result;
     } catch (error) {
       return Logger.info(error);
     }
   },
-
+  "removeRolePermissions": function(roleId, permissions, group){
+    if (!Reaction.hasPermission("reaction-accounts", Meteor.userId(), group)) {
+      throw new Meteor.Error(403, "Access denied");
+    }
+    check(roleId, Match.OneOf(String, Array));
+    check(permissions, Match.OneOf(String, Array));
+    check(group, Match.Optional(String));
+    this.unblock();
+    try {
+      console.log(permissions);
+      return setRoles.update({_id:roleId},{
+        $pull:{
+            permissions: { 
+                $in:
+                    permissions
+            }
+        } 
+      });
+    } catch (error) {
+      return Logger.info(error);
+    }
+  }
 });

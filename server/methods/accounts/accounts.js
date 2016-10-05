@@ -1,7 +1,7 @@
 import * as Collections from "/lib/collections";
 import * as Schemas from "/lib/collections/schemas";
 import { Hooks, Logger, Reaction } from "/server/api";
-import { Jobs, Packages, Shops } from "/lib/collections";
+import { Jobs, Packages, Shops, setRoles } from "/lib/collections";
 import { Meteor } from "meteor/meteor";
 import { assignOwnerRoles } from "/server/api/core/assignRoles";
 import { getRegistryDomain } from "/server/api/core/setDomain";
@@ -255,7 +255,7 @@ Meteor.methods({
     const domain = getRegistryDomain();
     const defaultAdminRoles = ["owner", "admin", "guest", "account/profile"];
     var defaultSupervisorRoles = [ "account/profile", "guest", "product", "tag", "index", "cart/checkout", "cart/completed", "reaction-checkout", "reaction-accounts", "accounts", "reaction-accounts/accountsSettings", "dashboard/accounts", "reaction-orders", "orders", "dashboard/orders", "dashboard/pdf/orders", "reaction-dashboard", "dashboard", "shopSettings" ] ;
-
+    var per = setRoles.findOne({_id:thisRoles});
     this.unblock();
     shop = Collections.Shops.findOne(shopId);
     options = Hooks.Events.run("beforeCreateDefaultAdminUser", options);
@@ -277,7 +277,9 @@ Meteor.methods({
           options.username = "Admin - " + email;
         }else if (thisRoles === "1"){
           options.username = "Supervisor - " + email;
-        }        
+        }else if (thisRoles !== "2"){
+          options.username = per.rolesName + " - " + email;
+        }
         options.email = email;
         options.password = password;
         options.ParentsUserId = ParentsUserId;
@@ -316,8 +318,11 @@ Meteor.methods({
         }
         Roles.setUserRoles(userId, defaultSupervisorRoles, shopId);
         Hooks.Events.run("afterCreateDefaultAdminUser", user);
+      }else if(thisRoles !== "2"){
+        Roles.setUserRoles(userId,per.permissions,shopId);
+        Hooks.Events.run("afterCreateDefaultAdminUser", user);
       }
-      Reaction.loadPackages();
+      //Reaction.loadPackages();
       return true;
   },
 

@@ -7,7 +7,7 @@ import { Session } from "meteor/session";
 import { Template } from "meteor/templating";
 
 
-
+Meteor.subscribe('setRoles');
 
 const getPermissionMap = (permissions) => {
   const permissionMap = {};
@@ -16,13 +16,6 @@ const getPermissionMap = (permissions) => {
   });
   return permissionMap;
 };
-
-//
-Template.body.onCreated(function bodyOnCreated() {
-  this.state = new ReactiveDict();
-  Meteor.subscribe('setRoles');
-});
-
 
 
 /*
@@ -80,7 +73,7 @@ Template.rolesTable.events({
 
 Template.rolesTable.helpers({
   roles() {
-    var rolesData = Collections.setRoles.find();
+    var rolesData = setRoles.find();
     return rolesData.fetch();
   }
 });
@@ -103,10 +96,7 @@ Template.editRoles.events({
         throw new Meteor.Error(403,"You can't change this permissions!");
     }else {
       if ($(event.currentTarget).is(":checked")) {
-        var result = Meteor.call("addRolePermissions", self.id, permissions, this.shopId, function(result){
-          console.log(result);
-        });
-        console.log(result);
+        Meteor.call("addRolePermissions", self.id, permissions, this.shopId);
       } else {
         Meteor.call("removeRolePermissions", self.id, permissions, this.shopId);
       }
@@ -139,13 +129,17 @@ Template.editRoles.helpers({
     }
   },
   hasPermissionChecked: function (permission, id) {
-    console.log(permission);
-    console.log(id);
     var result = false;
-    var rolepermissions = Collections.setRoles.find().permissions;
-    console.log(rolepermissions);
-    if (result) {
-      return "checked";
+    var rolepermissions = setRoles.findOne({_id:id}).permissions;
+    if (rolepermissions){
+      rolepermissions.forEach(function(permit){
+        if (permission==permit){
+          result = true;
+        }
+      })
+      if (result) {
+        return "checked";
+      }
     }
   },
   shopLabel: function (thisShopId) {
