@@ -43,7 +43,6 @@ Meteor.methods({
     check(group, Match.Optional(String));
     this.unblock();
     try {
-      console.log(permissions);
       return setRoles.update({_id:roleId},{
         $addToSet:{
             permissions: { 
@@ -65,7 +64,6 @@ Meteor.methods({
     check(group, Match.Optional(String));
     this.unblock();
     try {
-      console.log(permissions);
       return setRoles.update({_id:roleId},{
         $pull:{
             permissions: { 

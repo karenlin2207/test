@@ -75,7 +75,7 @@ risul:moment-timezone
 tmeasday:publish-counts
 vsivsi:job-collection
 react-meteor-data
-allpay
+
 
 # Testing packages
 dburles:factory
