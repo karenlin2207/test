@@ -215,7 +215,6 @@
         "addtracking": "添加追踪",
         "shipmentEmpty": "出货单中没有货品",
         "shipmentPacked": "所有货品已经打包",
-        "shipped": "已出货",
         "shippingNotifyCustomer": "通知客户他们的货品即将被发出。",
         "resendNotification": "重新发送出货通知"
       },
@@ -360,18 +359,14 @@
         "with": "以",
         "checkoutAsGuest": "不注册账号，直接结账",
         "role": "角色",
-        "checkedRoles": "用户權限",
-        "AdminRoles": "",
-        "SupervisorRoles": "",
-        "GuestRoles": "访客",
         "info": {
           "emailSent": "邮件已发出",
           "emailVerified": "邮箱已验证",
           "passwordChanged": "密码已修改",
           "passwordReset": "重置密码",
           "passwordResetSend": "重置密码的邮件已经发送。",
-          "invitationSent": "账号已创建",
-          "sendInvitation": "创建账号"
+          "invitationSent": "邀请已发出",
+          "sendInvitation": "发送邀请"
         },
         "error": {
           "emailRequired": "需要邮箱地址。",
@@ -415,8 +410,7 @@
           "verifyEmailLinkExpired": "用于验证邮箱的链接已经失效。",
           "verifyEmailLinkIsForUnknownAddress": "用于验证邮箱的链接指向了未知地址。",
           "matchFailed": "匹配失败。",
-          "unknownError": "未知错误。",
-	  "alreadyCreated": "创建失敗，邮箱已被注册"
+          "unknownError": "未知错误。"
         }
       }
     }

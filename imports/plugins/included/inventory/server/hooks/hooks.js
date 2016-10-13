@@ -1,5 +1,6 @@
 import { Cart, Products, Orders } from "/lib/collections";
 import { Logger } from "/server/api";
+import { registerInventory } from "../methods/inventory";
 
 /**
  * Collection Hooks
@@ -87,15 +88,16 @@ Products.after.insert((userId, doc) => {
   if (doc.type !== "variant") {
     return false;
   }
-  Meteor.call("inventory/register", doc);
+  // Meteor.call("inventory/register", doc);
+  registerInventory(doc);
 });
 
 function markInventoryShipped(doc) {
   const order = Orders.findOne(doc._id);
   const orderItems = order.items;
-  let cartItems = [];
-  for (let orderItem of orderItems) {
-    let cartItem = {
+  const cartItems = [];
+  for (const orderItem of orderItems) {
+    const cartItem = {
       _id: orderItem.cartItemId,
       shopId: orderItem.shopId,
       quantity: orderItem.quantity,
@@ -110,9 +112,9 @@ function markInventoryShipped(doc) {
 
 function markInventorySold(doc) {
   const orderItems = doc.items;
-  let cartItems = [];
-  for (let orderItem of orderItems) {
-    let cartItem = {
+  const cartItems = [];
+  for (const orderItem of orderItems) {
+    const cartItem = {
       _id: orderItem.cartItemId,
       shopId: orderItem.shopId,
       quantity: orderItem.quantity,

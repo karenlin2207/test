@@ -6,7 +6,6 @@ html, body {
 
 main {
   min-height: 80vh;
-  // margin-top:55px;
   // padding: 20px 60px 135px 60px;
   // padding: 20px 0 135px
   background-color: @body-bg;
@@ -14,10 +13,6 @@ main {
 
 .container-main {
   padding: 20px 60px 20px 60px;
-
-  @media only screen and (min-width: @screen-sm-max){
-    margin-top:55px;
-  }
 
   @media only screen and (max-width: @screen-sm-max) {
     padding: 20px;
@@ -34,9 +29,6 @@ main {
 @media only screen and (max-width: @screen-sm-max) {
   body {
     font-size: @font-size-small;
-  }
-  main{
-    margin-top:55px;
   }
   h1 {
     font-size: floor((@font-size-base * 2.15));
@@ -83,7 +75,21 @@ h3 {
   font-weight: @headings-font-weight-h3;
 }
 
+a {
+  cursor: pointer;
 
+  &:focus, &:hover {
+    text-decoration: none;
+  }
+}
+
+// Truncate and add an ellipsis when text extends
+// beyond the bounds of its parent container
+.truncate {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
 
 /* Badge Colors
 // Contextual variations of badges

@@ -49,7 +49,7 @@
 }
 
 .rui.navbar .rui.tagnav.vertical {
-
+  background: @white;
 }
 
 .rui.navbar .rui.tagnav.vertical .rui.tag.link {
@@ -60,7 +60,6 @@
   .flex(0 0 auto);
   position: relative;
   cursor: pointer;
-  margin-right:75px;
 }
 
 .rui.navbar .dropdown a {
@@ -161,6 +160,7 @@
 }
 
 .rui.navbar .accounts .dropdown .user-accounts-dropdown-content {
+  min-width: 220px;
   min-height: 50px;
   // margin-bottom: 30px;
   color: @gray-darker;
@@ -213,4 +213,22 @@
   margin-top: 0;
   .right(0);
   .left(auto);
+}
+
+.rui.navbar .search {
+  .display(flex);
+  .align-items(center);
+  .flex(0 0 auto);
+  height: @navbar-height;
+  padding: 0px @navbar-padding-vertical;
+  cursor: pointer;
+}
+
+.rui.navbar .search:hover {
+  background-color: @navbar-default-toggle-icon-bar-bg;
+  border-color: @navbar-default-toggle-border-color;
+}
+
+.rui.navbar .search:hover button {
+  outline: none;
 }

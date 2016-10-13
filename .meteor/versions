@@ -39,7 +39,7 @@ cfs:data-man@0.0.6
 cfs:file@0.1.17
 cfs:filesystem@0.1.2
 cfs:graphicsmagick@0.0.18
-cfs:gridfs@0.0.33
+cfs:gridfs@0.0.34
 cfs:http-methods@0.0.32
 cfs:http-publish@0.0.13
 cfs:power-queue@0.9.11
@@ -93,14 +93,12 @@ less@2.7.5
 livedata@1.0.18
 localstorage@1.0.11
 logging@1.1.15
-matb33:bootstrap-base@10.0.0
-matb33:bootstrap-dropdowns@10.0.0
 matb33:collection-hooks@0.8.4
 mdg:validated-method@1.1.0
 mdg:validation-error@0.5.1
 meteor@1.2.17
 meteor-base@1.0.4
-meteorhacks:fast-render@2.14.0
+meteorhacks:fast-render@2.16.0
 meteorhacks:inject-data@2.0.0
 meteorhacks:meteorx@1.4.1
 meteorhacks:picker@1.0.3
@@ -113,7 +111,7 @@ mobile-experience@1.0.4
 mobile-status-bar@1.0.12
 modules@0.7.6
 modules-runtime@0.7.6
-momentjs:moment@2.15.0
+momentjs:moment@2.15.1
 mongo@1.1.12
 mongo-id@1.0.5
 mongo-livedata@1.0.12
@@ -150,8 +148,6 @@ spacebars@1.0.13
 spacebars-compiler@1.0.13
 srp@1.0.9
 standard-minifier-js@1.2.0
-summernote:summernote@0.8.1
-tarang:ssl@1.0.1
 templating@1.2.15
 templating-compiler@1.2.15
 templating-runtime@1.2.15
@@ -159,7 +155,6 @@ templating-tools@1.0.5
 tmeasday:check-npm-versions@0.3.1
 tmeasday:publish-counts@0.7.3
 tracker@1.1.0
-twbs:bootstrap@3.3.6
 twitter@1.1.12
 ui@1.0.12
 underscore@1.0.9

@@ -106,13 +106,13 @@ export default {
         return true;
       }
       // global roles check
-      let sellerShopPermissions = Roles.getGroupsForUser(userId, "admin");
+      const sellerShopPermissions = Roles.getGroupsForUser(userId, "admin");
       // we're looking for seller permissions.
       if (sellerShopPermissions) {
         // loop through shops roles and check permissions
-        for (let key in sellerShopPermissions) {
+        for (const key in sellerShopPermissions) {
           if (key) {
-            let shop = sellerShopPermissions[key];
+            const shop = sellerShopPermissions[key];
             if (Roles.userIsInRole(userId, permissions, shop)) {
               return true;
             }
@@ -171,17 +171,17 @@ export default {
   },
 
   hasOwnerAccess() {
-    let ownerPermissions = ["owner"];
+    const ownerPermissions = ["owner"];
     return this.hasPermission(ownerPermissions);
   },
 
   hasAdminAccess() {
-    let adminPermissions = ["owner", "admin"];
+    const adminPermissions = ["owner", "admin"];
     return this.hasPermission(adminPermissions);
   },
 
   hasDashboardAccess() {
-    let dashboardPermissions = ["owner", "admin", "dashboard"];
+    const dashboardPermissions = ["owner", "admin", "dashboard"];
     return this.hasPermission(dashboardPermissions);
   },
 
@@ -193,17 +193,24 @@ export default {
     return this.shopName;
   },
 
-  allowGuestCheckout() {
-    let allowGuest = false;
-    const packageRegistry = Packages.findOne({
+  getShopSettings() {
+    const settings = Packages.findOne({
       name: "core",
       shopId: this.shopId
-    });
+    }) || {};
+    return settings.settings || {};
+  },
+
+  getPackageSettings(name) {
+    return Packages.findOne({ name, shopId: this.getShopId() });
+  },
+
+  allowGuestCheckout() {
+    let allowGuest = false;
+    const settings = this.getShopSettings();
     // we can disable in admin, let's check.
-    if (typeof packageRegistry === "object" &&
-      typeof packageRegistry.settings === "object" &&
-      packageRegistry.settings.public.allowGuestCheckout) {
-      allowGuest = packageRegistry.settings.public.allowGuestCheckout;
+    if (settings.public && settings.public.allowGuestCheckout) {
+      allowGuest = settings.public.allowGuestCheckout;
     }
     return allowGuest;
   },
@@ -231,7 +238,7 @@ export default {
     if (viewData) {
       Session.set("admin/actionView", viewData);
     } else {
-      let registryItem = this.getRegistryForCurrentRoute(
+      const registryItem = this.getRegistryForCurrentRoute(
         "settings");
 
       if (registryItem) {
@@ -271,7 +278,7 @@ export default {
     const currentRoute = this.Router.current();
     const template = currentRoute.route.options.template;
     // find registry entries for routeName
-    let reactionApp = Packages.findOne({
+    const reactionApp = Packages.findOne({
       "registry.name": currentRouteName,
       "registry.provides": provides
     }, {
@@ -284,7 +291,7 @@ export default {
 
     // valid application
     if (reactionApp) {
-      let settingsData = _.find(reactionApp.registry, function (item) {
+      const settingsData = _.find(reactionApp.registry, function (item) {
         return item.provides === provides && item.template === template;
       });
       return settingsData;
@@ -305,9 +312,9 @@ export default {
 function createCountryCollection(countries) {
   check(countries, Object);
   const countryOptions = [];
-  for (let locale in countries) {
+  for (const locale in countries) {
     if ({}.hasOwnProperty.call(countries, locale)) {
-      let country = countries[locale];
+      const country = countries[locale];
       countryOptions.push({
         label: country.name,
         value: locale
@@ -324,7 +331,7 @@ function createCountryCollection(countries) {
     return 0;
   });
 
-  for (let country of countryOptions) {
+  for (const country of countryOptions) {
     Countries.insert(country);
   }
   return countryOptions;

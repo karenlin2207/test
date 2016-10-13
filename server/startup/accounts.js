@@ -1,9 +1,8 @@
 import { Meteor } from "meteor/meteor";
 import * as Collections from "/lib/collections";
 import { Hooks, Logger, Reaction } from "/server/api";
-export default function () {
 
-  console.log('[account]');
+export default function () {
   /**
    * Make sure initial admin user has verified their
    * email before allowing them to login.
@@ -25,12 +24,12 @@ export default function () {
       return attempt.allowed;
     }
 
-    let loginEmail = attempt.methodArguments[0].user.email;
-    let adminEmail = process.env.REACTION_EMAIL;
+    const loginEmail = attempt.methodArguments[0].user.email;
+    const adminEmail = process.env.REACTION_EMAIL;
 
     if (loginEmail && loginEmail === adminEmail) {
       // filter out the matching login email from any existing emails
-      let userEmail = _.filter(attempt.user.emails, function (email) {
+      const userEmail = _.filter(attempt.user.emails, function (email) {
         return email.address === loginEmail;
       });
 
@@ -52,15 +51,14 @@ export default function () {
     if (!options.anonymous) {
       return {};
     }
-    let loginHandler;
-    let stampedToken = Accounts._generateStampedLoginToken();
-    let userId = Accounts.insertUserDoc({
+    const stampedToken = Accounts._generateStampedLoginToken();
+    const userId = Accounts.insertUserDoc({
       services: {
         anonymous: true
       },
       token: stampedToken.token
     });
-    loginHandler = {
+    const loginHandler = {
       type: "anonymous",
       userId: userId
     };
@@ -73,6 +71,9 @@ export default function () {
    * adds Accounts record for reaction user profiles
    * we clone the user into accounts, as the user collection is
    * only to be used for authentication.
+   * - defaultVisitorRole
+   * - defaultRoles
+   * can be overriden from Shops
    *
    * @see: http://docs.meteor.com/#/full/accounts_oncreateuser
    */
@@ -81,23 +82,34 @@ export default function () {
     const shopId = shop._id;
     const defaultVisitorRole =  ["anonymous", "guest", "product", "tag", "index", "cart/checkout", "cart/completed"];
     const defaultRoles =  ["guest", "account/profile", "product", "tag", "index", "cart/checkout", "cart/completed"];
-    let roles = {};
-    let additionals = {
-      profile: {}
+    const roles = {};
+    const additionals = {
+      profile: Object.assign({}, options && options.profile)
     };
     if (!user.emails) user.emails = [];
     // init default user roles
     // we won't create users unless we have a shop.
     if (shop) {
+      // retain language when user has defined a language
+      // perhaps should be treated as additionals
+      // or in onLogin below, or in the anonymous method options
+      if (!(Meteor.users.find().count() === 0)) { // dont set on inital admin
+        if (!user.profile) user.profile = {};
+        const currentUser = Meteor.user(user);
+        if (currentUser && currentUser.profile && currentUser.profile.lang && !user.profile.lang) {
+          user.profile.lang = currentUser.profile.lang;
+        }
+      }
+
       // if we don't have user.services we're an anonymous user
       if (!user.services) {
         roles[shopId] = shop.defaultVisitorRole || defaultVisitorRole;
       } else {
         roles[shopId] = shop.defaultRoles || defaultRoles;
         // also add services with email defined to user.emails[]
-        for (let service in user.services) {
+        for (const service in user.services) {
           if (user.services[service].email) {
-            let email = {
+            const email = {
               provides: "default",
               address: user.services[service].email,
               verified: true
@@ -121,28 +133,10 @@ export default function () {
         }
       }
       // clone before adding roles
-
-     let account = Object.assign({}, user, additionals);
+      const account = Object.assign({}, user, additionals);
       account.userId = user._id;
-      if (Meteor.user()) {    
-        let parentsId = Meteor.user()._id;    
-        if (parentsId){    
-        account.parentsId = parentsId;    
-        }   
-        if (parentsId){   
-          const parents = Collections.Accounts.findOne({_id : parentsId});    
-          if (parents.childrensId) {    
-            parents.childrensId[parents.childrensId.length] = user._id;    
-          }else{   
-            let childId = user._id;    
-            parents.childrensId= [childId];    
-          }    
-        Collections.Accounts.update({_id :parentsId}, {$set : {"childrensId":parents.childrensId}});    
-        }   
-      }
       Collections.Accounts.insert(account);
-      
-      
+
       // send a welcome email to new users,
       // but skip the first default admin user
       // (default admins already get a verification email)
@@ -156,7 +150,6 @@ export default function () {
       // run onCreateUser hooks
       // (the user object must be returned by all callbacks)
       const userDoc = Hooks.Events.run("onCreateUser", user, options);
-
       return userDoc;
     }
   });
@@ -176,7 +169,7 @@ export default function () {
     // all users are guest, but anonymous user don't have profile access
     // or ability to order history, etc. so ensure its removed upon login.
     if (options.type !== "anonymous" && options.type !== "resume") {
-      let update = {
+      const update = {
         $pullAll: {}
       };
 
@@ -199,6 +192,7 @@ export default function () {
       const cart = Collections.Cart.findOne({
         userId: options.user._id
       });
+
       // for a rare use cases
       if (typeof cart !== "object") return false;
       // in current version currentSessionId will be available for anonymous

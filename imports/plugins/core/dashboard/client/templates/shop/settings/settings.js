@@ -4,7 +4,7 @@ import { Media, Packages, Shops } from "/lib/collections";
 
 Template.shopBrandImageOption.helpers({
   cardProps(data) {
-    let props = {
+    const props = {
       controls: []
     };
 
@@ -110,7 +110,7 @@ Template.shopSettings.helpers({
     const shopId = Reaction.getShopId();
 
     return (files) => {
-      for (let file of files) {
+      for (const file of files) {
         file.metadata = {
           type: "brandAsset",
           ownerId: userId,
@@ -142,7 +142,7 @@ Template.shopSettings.helpers({
     }];
 
     if (paymentMethods && _.isArray(paymentMethods)) {
-      for (let method of paymentMethods) {
+      for (const method of paymentMethods) {
         options.push({
           label: i18next.t(method.i18nKeyLabel),
           value: method.packageName
@@ -181,19 +181,6 @@ AutoForm.hooks({
       return Alerts.toast(
         `${i18next.t("shopSettings.shopAddressSettingsFailed")} ${error}`, "error"
       );
-    }
-  }
-});
-
-AutoForm.hooks({
-  shopEditEmailForm: {
-    onSuccess: function () {
-      return Alerts.toast(i18next.t("shopSettings.shopMailSettingsSaved"),
-        "success");
-    },
-    onError: function (operation, error) {
-      return Alerts.toast(`${i18next.t("shopSettings.shopMailSettingsFailed")
-        } ${error}`, "error");
     }
   }
 });

@@ -67,25 +67,23 @@ Object.assign(Alerts, {
         type: "info",
         ...titleOrOptions
       }).then((isConfirm) => {
-        if (isConfirm === true) {
+        if (isConfirm === true && typeof messageOrCallback === "function") {
           messageOrCallback(isConfirm);
         }
       });
     }
 
-    let title = titleOrOptions;
-    let message = messageOrCallback;
+    const title = titleOrOptions;
+    const message = messageOrCallback;
 
     return swal({
       title,
-      message,
+      text: message,
       type: "info",
       ...options
     }).then((isConfirm) => {
-      if (isConfirm === true) {
-        if (callback) {
-          callback(isConfirm);
-        }
+      if (isConfirm === true && typeof callback === "function") {
+        callback(isConfirm);
       }
     });
   },

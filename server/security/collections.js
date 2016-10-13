@@ -6,13 +6,13 @@ const {
   Cart,
   Packages,
   Discounts,
+  Emails,
   Jobs,
   Media,
   Orders,
   Products,
   Shipping,
   Shops,
-  setRoles,
   Tags,
   Templates,
   Translations
@@ -101,7 +101,6 @@ export default function () {
     Shipping,
     Orders,
     Packages,
-    setRoles,
     Templates,
     Jobs
   ]).ifHasRole({
@@ -159,11 +158,6 @@ export default function () {
     group: Reaction.getShopId()
   }).ifShopIdMatches().ifUserIdMatches().ifSessionIdMatches().allowInClientCode();
 
-  setRoles.permit(["insert", "update", "remove"]).ifHasRole({
-    role: ["admin", "owner"],
-    group: Reaction.getShopId()
-  }).ifShopIdMatchesThisId().allowInClientCode();
-
   /*
    * Users may update their own account
    */
@@ -181,5 +175,14 @@ export default function () {
         return true;
       }
     });
+  });
+
+  /**
+   * Emails - Deny all client side ops
+   */
+  Emails.deny({
+    insert: () => true,
+    update: () => true,
+    remove: () => true
   });
 }

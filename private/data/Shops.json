@@ -404,10 +404,6 @@
     "i18n": "zh",
     "enabled": true
   }, {
-    "label": "中文(繁體)",
-    "i18n": "zhtw",
-    "enabled": true
-  }, {
     "label": "České",
     "i18n": "cs",
     "enabled": true
@@ -3075,12 +3071,6 @@
     "isShippingDefault": true,
     "isBillingDefault": true
   }],
-  "defaultAdminRole":[
-    "owner",
-    "admin", 
-    "guest", 
-    "account/profile"
-  ],
   "defaultVisitorRole": [
     "anonymous",
     "guest",
@@ -6172,12 +6162,6 @@
     "isShippingDefault": true,
     "isBillingDefault": true
   }],
-  "defaultAdminRole":[
-    "owner",
-    "admin", 
-    "guest", 
-    "account/profile"
-  ],
   "defaultVisitorRole": [
     "anonymous",
     "guest",

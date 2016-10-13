@@ -2,7 +2,6 @@ import { Reaction } from "/client/api";
 import { Packages, Shops } from "/lib/collections";
 import { Meteor } from "meteor/meteor";
 import { Template } from "meteor/templating";
-import * as Collections from "/lib/collections";
 
 const getPermissionMap = (permissions) => {
   const permissionMap = {};
@@ -28,21 +27,6 @@ Template.member.events({
     });
   }
 });
-Template.member.helpers({
-  manageChildrenPermission: function(){
-    let user = Meteor.users.findOne({_id:this.userId});
-    let childrens = Collections.Accounts.findOne(Meteor.user()._id).childrensId;
-    for (var i=0;i<childrens.length;i++){
-      if (childrens[i]=== this.userId){
-         if (user.username) {
-          if (!Roles.userIsInRole(this.userId, "owner", this.shopId)){
-            return true;
-          }
-         }
-      }
-    }
-  }
-});
 
 Template.memberSettings.helpers({
   isOwnerDisabled: function () {
@@ -52,13 +36,6 @@ Template.memberSettings.helpers({
       }
     }
   },
-  hasthisPermissions: function(permissions){
-    if (!Roles.userIsInRole(Meteor.userId(), permissions, this.shopId)){
-      return true;
-    }else{
-      return false;
-    }
-  },
   hasPermissionChecked: function (permission, userId) {
     if (userId && Roles.userIsInRole(userId, permission, this.shopId || Roles.userIsInRole(userId, permission,
         Roles.GLOBAL_GROUP))) {
@@ -66,12 +43,12 @@ Template.memberSettings.helpers({
     }
   },
   groupsForUser: function (groupUserId) {
-    let userId = groupUserId || this.userId || Template.parentData(1).userId;
+    const userId = groupUserId || this.userId || Template.parentData(1).userId;
     return Roles.getGroupsForUser(userId);
   },
   shopLabel: function (thisShopId) {
     const shopId = thisShopId || Template.currentData();
-    let shop = Shops.findOne({
+    const shop = Shops.findOne({
       _id: shopId
     });
     if (shop && shop.name) {
@@ -79,8 +56,7 @@ Template.memberSettings.helpers({
     }
   },
   permissionGroups: function (thisShopId) {
-    let permissionGroups = [];
-    console.log(Template.currentData());
+    const permissionGroups = [];
     const shopId = thisShopId || Template.currentData();
     const packages = Packages.find({
       shopId: shopId
@@ -89,7 +65,7 @@ Template.memberSettings.helpers({
     packages.forEach(function (pkg) {
       const permissions = [];
       if (pkg.registry && pkg.enabled) {
-        for (let registryItem of pkg.registry) {
+        for (const registryItem of pkg.registry) {
           // Skip entires with missing routes
           if (!registryItem.route) {
             continue;
@@ -97,14 +73,14 @@ Template.memberSettings.helpers({
 
           // Get all permissions, add them to an array
           if (registryItem.permissions) {
-            for (let permission of registryItem.permissions) {
+            for (const permission of registryItem.permissions) {
               permission.shopId = shopId;
               permissions.push(permission);
             }
           }
 
           // Also create an object map of those same permissions as above
-          let permissionMap = getPermissionMap(permissions);
+          const permissionMap = getPermissionMap(permissions);
           if (!permissionMap[registryItem.route]) {
             permissions.push({
               shopId: pkg.shopId,
@@ -144,34 +120,30 @@ Template.memberSettings.helpers({
 Template.memberSettings.events({
   "change [data-event-action=toggleMemberPermission]": function (event, template) {
     const self = this;
-    let permissions = [];
+    const permissions = [];
     const member = template.data;
     if (!this.shopId) {
       throw new Meteor.Error("Shop is required");
     }
     if (self.name) {
       permissions.push(self.name);
-      for (let pkgPermissions of self.permissions) {
+      for (const pkgPermissions of self.permissions) {
         permissions.push(pkgPermissions.permission);
       }
     } else {
       permissions.push(self.permission);
     }
-    if (!Roles.userIsInRole(Meteor.userId(), permissions, this.shopId)){
-        throw new Meteor.Error(403,"You can't change this permissions!");
-    }else {
-      if ($(event.currentTarget).is(":checked")) {
-        Meteor.call("accounts/addUserPermissions", member.userId, permissions, this.shopId);
-      } else {
-        Meteor.call("accounts/removeUserPermissions", member.userId, permissions, this.shopId);
-      }
+    if ($(event.currentTarget).is(":checked")) {
+      Meteor.call("accounts/addUserPermissions", member.userId, permissions, this.shopId);
+    } else {
+      Meteor.call("accounts/removeUserPermissions", member.userId, permissions, this.shopId);
     }
   },
   "click [data-event-action=resetMemberPermission]": function (event, template) {
     const $icon = $(event.currentTarget);
     if (confirm($icon.data("confirm"))) {
       const results = [];
-      for (let role of template.data.roles) {
+      for (const role of template.data.roles) {
         results.push(Meteor.call("accounts/setUserPermissions", this.userId, ["guest", "account/profile"], role));
       }
       return results;

@@ -1,6 +1,7 @@
+import { Meteor } from "meteor/meteor";
+import { Template } from "meteor/templating";
 import { i18next } from "/client/api";
 import { LoginFormSharedHelpers } from "/client/modules/accounts/helpers";
-import { Template } from "meteor/templating";
 
 Template.loginFormResetPasswordView.events({
 
@@ -13,10 +14,10 @@ Template.loginFormResetPasswordView.events({
   "submit form": (event, template) => {
     event.preventDefault();
 
-    let emailAddress = template.$(".login-input-email").val().trim();
-    let validatedEmail = LoginFormValidation.email(emailAddress);
-    let templateInstance = Template.instance();
-    let errors = {};
+    const emailAddress = template.$(".login-input-email").val().trim();
+    const validatedEmail = LoginFormValidation.email(emailAddress);
+    const templateInstance = Template.instance();
+    const errors = {};
 
     templateInstance.formMessages.set({});
 
@@ -32,7 +33,7 @@ Template.loginFormResetPasswordView.events({
       // return;
     }
 
-    Accounts.forgotPassword({ email: emailAddress}, (error) => {
+    Meteor.call("accounts/sendResetPasswordEmail", { email: emailAddress }, (error) => {
       // Show some message confirming result
       if (error) {
         templateInstance.formMessages.set({
@@ -55,7 +56,7 @@ Template.loginFormResetPasswordView.events({
  *
  */
 Template.loginFormResetPasswordView.onCreated(() => {
-  let template = Template.instance();
+  const template = Template.instance();
 
   template.uniqueId = Random.id();
   template.formMessages = new ReactiveVar({});
